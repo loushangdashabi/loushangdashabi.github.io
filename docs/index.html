@@ -9,7 +9,7 @@
 <meta name="author" content="楼上">
 <meta name="author" content="Mesa 开发团队 (提供demo)">
 <meta name="dcterms.date" content="2025-06-23">
-<meta name="description" content="使用 R 调用 Mesa 库构建 Agent-Based Model 的完整示例">
+<meta name="description" content="使用 R 调用 Mesa 库构建 ABM, 模型demo完全来源于 Mesa 官方教程，代码经过轻度改编。 https://mesa.readthedocs.io/latest/">
 
 <title>在R中使用 Python 模块 Mesa 来创建 ABM 模型</title>
 <style>
@@ -162,7 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    使用 R 调用 Mesa 库构建 Agent-Based Model 的完整示例
+    使用 R 调用 Mesa 库构建 ABM, 模型demo完全来源于 Mesa 官方教程，代码经过轻度改编。 https://mesa.readthedocs.io/latest/
   </div>
 </div>
 
@@ -309,16 +309,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 4.
-Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 10.
+<pre><code>Hi, I am an agent, you can call me 3.
+Hi, I am an agent, you can call me 9.
 Hi, I am an agent, you can call me 2.
 Hi, I am an agent, you can call me 7.
+Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 10.
 Hi, I am an agent, you can call me 5.
-Hi, I am an agent, you can call me 3.
 Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 9.</code></pre>
+Hi, I am an agent, you can call me 6.
+Hi, I am an agent, you can call me 1.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 seed 参数，则每次运行模型时 Agent 的顺序会保持一致。</p>
@@ -372,16 +372,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 6,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.
-Hi, I am an agent 1,and I have 1 dollars.
+<pre><code>Hi, I am an agent 10,and I have 1 dollars.
 Hi, I am an agent 4,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.
 Hi, I am an agent 9,and I have 1 dollars.
+Hi, I am an agent 3,and I have 1 dollars.
 Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.</code></pre>
+Hi, I am an agent 8,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 5,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>

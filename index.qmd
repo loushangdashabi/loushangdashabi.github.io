@@ -1,7 +1,43 @@
 ---
 title: "在R中使用 Python 模块 Mesa 来创建 ABM 模型"
-description: "使用 R 调用 Mesa 库构建 Agent-Based Model 的完整示例"
+author:
+  - "楼上"
+  - "Mesa 开发团队 (提供demo)"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
+
+description: >
+  使用 R 调用 Mesa 库构建 ABM，模型 demo 完全来源于 Mesa 官方教程，
+  代码经过轻度改编，持续更新中。
+
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "在R中使用 Python 模块 Mesa 来创建 ABM 模型"
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    respect-user-color-scheme: true
+
+    toc: true
+    toc-location: left
+    toc-depth: 5
+    page-layout: full
+
+    fig-align: center
+    highlight-style: github
+    code-copy: true
+    number-sections: true
+
+    grid:
+      sidebar-width: 300px
+
+filters:
+  - language-marker
 ---
 
 # 准备步骤
