@@ -286,7 +286,7 @@ g.set(
 plt.show()
 ```
 
-### 或者传入 R 中用 ggplot2 可视化
+### 传入 R 中用 ggplot2 可视化
 
 ```{r}
 #| display-language: true
