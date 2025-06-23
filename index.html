@@ -96,18 +96,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#创建-agent-类" id="toc-创建-agent-类" class="nav-link" data-scroll-target="#创建-agent-类"><span class="header-section-number">2.1</span> 创建 Agent 类</a></li>
   <li><a href="#创建模型类" id="toc-创建模型类" class="nav-link" data-scroll-target="#创建模型类"><span class="header-section-number">2.2</span> 创建模型类</a></li>
-  <li><a href="#让-agents-do" id="toc-让-agents-do" class="nav-link" data-scroll-target="#让-agents-do"><span class="header-section-number">2.3</span> 让 Agents “do”</a></li>
-  <li><a href="#运行模型" id="toc-运行模型" class="nav-link" data-scroll-target="#运行模型"><span class="header-section-number">2.4</span> 运行模型</a>
+  <li><a href="#让-agents-do" id="toc-让-agents-do" class="nav-link" data-scroll-target="#让-agents-do"><span class="header-section-number">2.3</span> 让 Agents “do”</a>
   <ul>
-  <li><a href="#模型修改练习" id="toc-模型修改练习" class="nav-link" data-scroll-target="#模型修改练习"><span class="header-section-number">2.4.1</span> 模型修改练习</a></li>
+  <li><a href="#运行模型" id="toc-运行模型" class="nav-link" data-scroll-target="#运行模型"><span class="header-section-number">2.3.1</span> 运行模型</a></li>
+  <li><a href="#模型修改练习" id="toc-模型修改练习" class="nav-link" data-scroll-target="#模型修改练习"><span class="header-section-number">2.3.2</span> 模型修改练习</a></li>
   </ul></li>
-  <li><a href="#agents-exchange" id="toc-agents-exchange" class="nav-link" data-scroll-target="#agents-exchange"><span class="header-section-number">2.5</span> Agents Exchange</a>
+  <li><a href="#agents-交换财富" id="toc-agents-交换财富" class="nav-link" data-scroll-target="#agents-交换财富"><span class="header-section-number">2.4</span> Agents 交换财富</a>
   <ul>
-  <li><a href="#run-the-model" id="toc-run-the-model" class="nav-link" data-scroll-target="#run-the-model"><span class="header-section-number">2.5.1</span> Run the Model</a></li>
-  <li><a href="#visualize-the-model" id="toc-visualize-the-model" class="nav-link" data-scroll-target="#visualize-the-model"><span class="header-section-number">2.5.2</span> Visualize the Model</a>
-  <ul class="collapse">
-  <li><a href="#or-use-reticulate-to-import-data-into-r-and-use-ggplot2-to-visualize" id="toc-or-use-reticulate-to-import-data-into-r-and-use-ggplot2-to-visualize" class="nav-link" data-scroll-target="#or-use-reticulate-to-import-data-into-r-and-use-ggplot2-to-visualize"><span class="header-section-number">2.5.2.1</span> Or use reticulate to import data into R and use ggplot2 to visualize</a></li>
-  </ul></li>
+  <li><a href="#运行模型-1" id="toc-运行模型-1" class="nav-link" data-scroll-target="#运行模型-1"><span class="header-section-number">2.4.1</span> 运行模型</a></li>
+  <li><a href="#可视化" id="toc-可视化" class="nav-link" data-scroll-target="#可视化"><span class="header-section-number">2.4.2</span> 可视化</a></li>
+  <li><a href="#或者传入-r-中用-ggolot2-可视化" id="toc-或者传入-r-中用-ggolot2-可视化" class="nav-link" data-scroll-target="#或者传入-r-中用-ggolot2-可视化"><span class="header-section-number">2.4.3</span> 或者传入 R 中用 ggolot2 可视化</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -200,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#初始化，每次使用 MoneyAgent 创建新对象时都会使用如下初始化</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model): <span class="co">#self代表当前对象，model 代表模型对象</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 将参数 model 传递给父类 (mesa.Agent)，让Agent知道自己所属的模型</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 将父类中的参数 model (mesa.Agent) 传入，让Agent知道自己所属的模型</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(model)</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 创建 Agent 的变量 wealth 并设置初始值</span></span>
@@ -259,9 +257,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">#随机重新排序 Agent 的激活顺序，并调用每个 Agent 的 say_hi 方法</span></span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.shuffle_do(<span class="st">"say_hi"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="运行模型" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="运行模型"><span class="header-section-number">2.4</span> 运行模型</h2>
+<section id="运行模型" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="运行模型"><span class="header-section-number">2.3.1</span> 运行模型</h3>
 <p>创建一个模型对象 (object) 并运行它的 step 方法。</p>
 <div class="cell language-marker" data-display-language="true">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#创建模型对象 starter_model，使用 MoneyModel 类</span></span>
@@ -271,16 +268,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 10.
-Hi, I am an agent, you can call me 4.
+<pre><code>Hi, I am an agent, you can call me 7.
+Hi, I am an agent, you can call me 10.
 Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 2.
-Hi, I am an agent, you can call me 9.
 Hi, I am an agent, you can call me 3.
 Hi, I am an agent, you can call me 8.
 Hi, I am an agent, you can call me 5.
+Hi, I am an agent, you can call me 4.
 Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 7.</code></pre>
+Hi, I am an agent, you can call me 2.
+Hi, I am an agent, you can call me 9.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 seed 参数，则每次运行模型时 Agent 的顺序会保持一致。</p>
@@ -300,8 +297,9 @@ Hi, I am an agent, you can call me 2.
 Hi, I am an agent, you can call me 8.</code></pre>
 </div>
 </div>
-<section id="模型修改练习" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="模型修改练习"><span class="header-section-number">2.4.1</span> 模型修改练习</h3>
+</section>
+<section id="模型修改练习" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="模型修改练习"><span class="header-section-number">2.3.2</span> 模型修改练习</h3>
 <p>在原有模型的基础上，让 Agent 在激活时输出自己的 wealth。</p>
 <div class="cell language-marker" data-display-language="true">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyAgent(mesa.Agent):</span>
@@ -334,82 +332,79 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 3,and I have 1 dollars.
-Hi, I am an agent 1,and I have 1 dollars.
-Hi, I am an agent 6,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.
-Hi, I am an agent 5,and I have 1 dollars.
+<pre><code>Hi, I am an agent 8,and I have 1 dollars.
 Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 4,and I have 1 dollars.</code></pre>
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 4,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 10,and I have 1 dollars.
+Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 5,and I have 1 dollars.
+Hi, I am an agent 9,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
 </section>
-<section id="agents-exchange" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="agents-exchange"><span class="header-section-number">2.5</span> Agents Exchange</h2>
+<section id="agents-交换财富" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="agents-交换财富"><span class="header-section-number">2.4</span> Agents 交换财富</h2>
 <div class="cell language-marker" data-display-language="true">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyAgent(mesa.Agent):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""An agent with fixed initial wealth."""</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model):</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Pass the parameters to the parent class.</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(model)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create the agent's variable and set the initial values.</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wealth <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> exchange(<span class="va">self</span>):</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Verify agent has some wealth</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.wealth <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(model)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wealth <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 定义 exchange 方法，让 Agent 交换财富</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> exchange(<span class="va">self</span>):</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.wealth <span class="op">&gt;</span> <span class="dv">0</span>: <span class="co">#有钱才能转账</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            <span class="co">#self.random, 是继承自 mesa.Agent 的随机数生成器</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="co">#.choice(...) 在列表中随机选择一个 Agent</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            <span class="co">#这里的self.model是在上一步—__init__中传入的模型对象</span></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            other_agent <span class="op">=</span> <span class="va">self</span>.random.choice(<span class="va">self</span>.model.agents)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> other_agent <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                other_agent.wealth <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.wealth <span class="op">-=</span> <span class="dv">1</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> other_agent <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>: <span class="co">#确保选到了一个 Agent</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                other_agent.wealth <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.wealth <span class="op">-=</span> <span class="dv">1</span></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyModel(mesa.Model):</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A model with some number of agents."""</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n):</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_agents <span class="op">=</span> n</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create agents</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyModel(mesa.Model):</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A model with some number of agents."""</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n, seed<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(seed <span class="op">=</span> seed)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_agents <span class="op">=</span> n</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        MoneyAgent.create_agents(model<span class="op">=</span><span class="va">self</span>, n<span class="op">=</span>n)</span>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>):</span>
 <span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Advance the model by one step."""</span></span>
 <span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># This function psuedo-randomly reorders the list of agent objects and</span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># then iterates through calling the function passed in as the parameter</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.shuffle_do(<span class="st">"exchange"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.shuffle_do(<span class="st">"exchange"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="run-the-model" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="run-the-model"><span class="header-section-number">2.5.1</span> Run the Model</h3>
+<section id="运行模型-1" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="运行模型-1"><span class="header-section-number">2.4.1</span> 运行模型</h3>
 <div class="cell language-marker" data-display-language="true">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)  <span class="co"># Tells the model to create 10 agents</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">30</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>):  <span class="co"># Runs the model for 10 steps; an underscore is common convention for a variable that is not used</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> MoneyModel(<span class="dv">1000</span>, <span class="dv">1234</span>)  <span class="co"># 创建 1000 个 Agents</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#这个 for 循环中 _ 是一个占位符</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#表示我们不关心循环变量的值，也不关心现在运行了几次，只是想运行30次</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">30</span>): </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="visualize-the-model" class="level3" data-number="2.5.2">
-<h3 data-number="2.5.2" class="anchored" data-anchor-id="visualize-the-model"><span class="header-section-number">2.5.2</span> Visualize the Model</h3>
+<section id="可视化" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="可视化"><span class="header-section-number">2.4.2</span> 可视化</h3>
 <div class="cell language-marker" data-display-language="true">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>agent_wealth <span class="op">=</span> [a.wealth <span class="cf">for</span> a <span class="kw">in</span> model.agents]</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram with seaborn</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.histplot(agent_wealth, discrete<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>g.<span class="bu">set</span>(</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Wealth distribution"</span>, xlabel<span class="op">=</span><span class="st">"Wealth"</span>, ylabel<span class="op">=</span><span class="st">"number of agents"</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span>  <span class="co"># The semicolon is just to avoid printing the object representation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[Text(0.5, 1.0, 'Wealth distribution'), Text(0.5, 0, 'Wealth'), Text(0, 0.5, 'number of agents')]</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 获取每个 Agent 的 wealth，放入一个列表</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>agent_wealth <span class="op">=</span> [a.wealth <span class="cf">for</span> a <span class="kw">in</span> model.agents]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 绘制直方图</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.histplot(agent_wealth, discrete<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>g.<span class="bu">set</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Wealth distribution"</span>, xlabel<span class="op">=</span><span class="st">"Wealth"</span>, ylabel<span class="op">=</span><span class="st">"number of agents"</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -418,11 +413,11 @@ Hi, I am an agent 4,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </div>
-<section id="or-use-reticulate-to-import-data-into-r-and-use-ggplot2-to-visualize" class="level4" data-number="2.5.2.1">
-<h4 data-number="2.5.2.1" class="anchored" data-anchor-id="or-use-reticulate-to-import-data-into-r-and-use-ggplot2-to-visualize"><span class="header-section-number">2.5.2.1</span> Or use reticulate to import data into R and use ggplot2 to visualize</h4>
+</section>
+<section id="或者传入-r-中用-ggolot2-可视化" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="或者传入-r-中用-ggolot2-可视化"><span class="header-section-number">2.4.3</span> 或者传入 R 中用 ggolot2 可视化</h3>
 <div class="cell language-marker" data-display-language="true">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
@@ -435,16 +430,17 @@ Hi, I am an agent 4,and I have 1 dollars.</code></pre>
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>agent_wealth_r <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wealth =</span> py<span class="sc">$</span>agent_wealth)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(agent_wealth_r, <span class="fu">aes</span>(<span class="at">x =</span> wealth)) <span class="sc">+</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">closed =</span> <span class="st">"left"</span>,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Wealth distribution"</span>,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Wealth"</span>,</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of agents"</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#所有的 python 对象都可以用 py$... 来访问</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>agent_wealth_r <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wealth =</span> py<span class="sc">$</span>agent_wealth)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(agent_wealth_r, <span class="fu">aes</span>(<span class="at">x =</span> wealth)) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">closed =</span> <span class="st">"left"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Wealth distribution"</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Wealth"</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of agents"</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -453,7 +449,6 @@ Hi, I am an agent 4,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </div>
-</section>
 </section>
 </section>
 </section>
