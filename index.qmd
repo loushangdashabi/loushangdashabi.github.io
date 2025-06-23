@@ -1,0 +1,270 @@
+---
+title: "在R中使用 Python 模块 Mesa 来创建 ABM 模型"
+description: "使用 R 调用 Mesa 库构建 Agent-Based Model 的完整示例"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+---
+
+# 准备步骤
+
+## 安装 python 环境并安装 mesa
+
+(只需要运行一次)
+
+```{r,eval=F}
+#| display-language: true
+library(reticulate)
+install_miniconda()
+conda_create(envname = "mesa-abm", python_version = "3.13.5")
+py_install(c("mesa[all]","seaborn"), envname = "mesa-abm", pip = TRUE)
+```
+
+## 启动 python 环境
+
+(每次都需要运行)
+
+```{r}
+#| display-language: true
+library(reticulate)
+use_condaenv("mesa-abm", required = TRUE)
+```
+
+## 导入需要的 python 模块
+
+```{python}
+#| display-language: true
+import mesa
+import seaborn as sns
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+
+# 模型示例 1: Boltzmann 财富模型
+
+在这个模型中，每个 Agent 会初始化 1 个单位的货币，并在每个 step 中随机给另一个 Agent 1 个单位的货币。
+
+## 创建 Agent 类
+
+Mesa 会自动为每个创建的 Agent 分配一个整数作为 unique_id。
+
+下面这段代码创建了一个新类 (class) MoneyAgent，继承了 mesa.Agent 类的属性。
+
+mesa.Agent 是 Mesa 模块中定义的一个基类，所有的 Agent 都应该继承这个类。
+
+```{python}
+#| display-language: true
+class MoneyAgent(mesa.Agent):
+    """An agent with fixed initial wealth."""
+    
+    #初始化，每次使用 MoneyAgent 创建新对象时都会使用如下初始化
+    def __init__(self, model): #self代表当前对象，model 代表模型对象
+      
+        # 将参数 model 传递给父类 (mesa.Agent)，让Agent知道自己所属的模型
+        super().__init__(model)
+
+        # 创建 Agent 的变量 wealth 并设置初始值
+        self.wealth = 1
+```
+
+## 创建模型类
+
+创建一个模型类，继承自 mesa.Model，负责创建、保存和管理所有 Agent。
+
+```{python}
+#| display-language: true
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n, seed=None): # n是创建的 Agent 数量，seed 是随机种子
+        super().__init__(seed=seed)
+        #在self (即当前模型) 中创建一个属性 num_agents，保存 Agent 的数量
+        self.num_agents = n 
+        # 调用类方法 create_agents，创建 n 个 Agent
+        MoneyAgent.create_agents(model=self, n=n)
+```
+
+## 让 Agents "do"
+
+通过 do 让 ABM 运行起来，mesa 中的 do 可以按不同的顺序激活 Agent。
+
+在每一个 step 中，(通常) 每一个 Agent 都会被激活并采取自己的行动，在内部发生变化和/或与彼此或者环境交互。
+
+此处使用 agent.shuffle_do() 来实现随机重新排序激活顺序。
+
+```{python}
+#| display-language: true
+class MoneyAgent(mesa.Agent):
+    """An agent with fixed initial wealth."""
+
+    def __init__(self, model):
+        super().__init__(model)
+        self.wealth = 1
+        #以上代码同上
+        
+        # 定义一个方法 say_hi，每个 step 中都会被调用
+    def say_hi(self):
+        # 为了演示，输出了每个 Agent 的 unique_id
+        print(f"Hi, I am an agent, you can call me {str(self.unique_id)}.")
+
+
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n, seed=None):
+        super().__init__(seed=seed)
+        self.num_agents = n
+
+        MoneyAgent.create_agents(model=self, n=n)
+        #以上代码同上
+
+    # 定义模型的 step 方法
+    def step(self):
+        """Advance the model by one step."""
+        
+        #随机重新排序 Agent 的激活顺序，并调用每个 Agent 的 say_hi 方法
+        self.agents.shuffle_do("say_hi")
+```
+
+## 运行模型
+
+创建一个模型对象 (object) 并运行它的 step 方法。
+
+```{python}
+#| display-language: true
+
+#创建模型对象 starter_model，使用 MoneyModel 类
+#此处的 10 对应 MoneyModel 类的第二个参数 n，表示创建 10 个 Agent
+starter_model = MoneyModel(10)
+
+#运行模型的 step 方法，激活所有 Agent
+starter_model.step()
+```
+
+如果在创建对象时传入了 seed 参数，则每次运行模型时 Agent 的顺序会保持一致。
+
+```{python}
+#| display-language: true
+starter_model = MoneyModel(10, seed = 1234)
+starter_model.step()
+```
+
+### 模型修改练习
+
+在原有模型的基础上，让 Agent 在激活时输出自己的 wealth。
+
+```{python}
+#| display-language: true
+class MoneyAgent(mesa.Agent):
+    """An agent with fixed initial wealth."""
+
+    def __init__(self, model):
+        super().__init__(model)
+
+        self.wealth = 1
+
+    # 定义 say_wealth 方法，输出 Agent 的 wealth
+    def say_wealth(self):
+        print(f"Hi, I am an agent {self.unique_id},"
+              f"and I have {self.wealth} dollars.")
+        
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n, seed=None):
+        super().__init__(seed=seed)
+        self.num_agents = n
+
+        MoneyAgent.create_agents(model=self, n=n)
+
+    def step(self):
+        """Advance the model by one step."""
+        
+        self.agents.shuffle_do("say_wealth")
+        
+starter_model = MoneyModel(10)
+starter_model.step()
+```
+
+## Agents Exchange
+
+```{python}
+#| display-language: true
+class MoneyAgent(mesa.Agent):
+    """An agent with fixed initial wealth."""
+
+    def __init__(self, model):
+        # Pass the parameters to the parent class.
+        super().__init__(model)
+
+        # Create the agent's variable and set the initial values.
+        self.wealth = 1
+
+    def exchange(self):
+        # Verify agent has some wealth
+        if self.wealth > 0:
+            other_agent = self.random.choice(self.model.agents)
+            if other_agent is not None:
+                other_agent.wealth += 1
+                self.wealth -= 1
+
+
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n):
+        super().__init__()
+        self.num_agents = n
+
+        # Create agents
+        MoneyAgent.create_agents(model=self, n=n)
+
+    def step(self):
+        """Advance the model by one step."""
+
+        # This function psuedo-randomly reorders the list of agent objects and
+        # then iterates through calling the function passed in as the parameter
+        self.agents.shuffle_do("exchange")
+```
+
+### Run the Model
+
+```{python}
+#| display-language: true
+model = MoneyModel(10)  # Tells the model to create 10 agents
+for _ in range(
+    30
+):  # Runs the model for 10 steps; an underscore is common convention for a variable that is not used
+    model.step()
+```
+
+### Visualize the Model
+
+```{python}
+#| display-language: true
+agent_wealth = [a.wealth for a in model.agents]
+# Create a histogram with seaborn
+g = sns.histplot(agent_wealth, discrete=True)
+g.set(
+    title="Wealth distribution", xlabel="Wealth", ylabel="number of agents"
+);  # The semicolon is just to avoid printing the object representation
+plt.show()
+```
+
+#### Or use reticulate to import data into R and use ggplot2 to visualize
+
+```{r}
+#| display-language: true
+library(reticulate)
+library(tidyverse)
+
+agent_wealth_r <- tibble(wealth = py$agent_wealth)
+
+ggplot(agent_wealth_r, aes(x = wealth)) +
+  geom_histogram(binwidth = 1, boundary = 0, closed = "left",
+                 color = "black", fill="darkgreen") +
+  labs(
+    title = "Wealth distribution",
+    x     = "Wealth",
+    y     = "Number of agents"
+  )+ theme_bw()
+```
