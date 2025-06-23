@@ -34,7 +34,7 @@ format:
     number-sections: true
 
     grid:
-      sidebar-width: 300px
+      sidebar-width: 350px
 
 filters:
   - language-marker
@@ -286,7 +286,7 @@ g.set(
 plt.show()
 ```
 
-### 或者传入 R 中用 ggolot2 可视化
+### 或者传入 R 中用 ggplot2 可视化
 
 ```{r}
 #| display-language: true
