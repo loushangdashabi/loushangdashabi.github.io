@@ -95,7 +95,7 @@ class MoneyAgent(mesa.Agent):
     #初始化，每次使用 MoneyAgent 创建新对象时都会使用如下初始化
     def __init__(self, model): #self代表当前对象，model 代表模型对象
       
-        # 将参数 model 传递给父类 (mesa.Agent)，让Agent知道自己所属的模型
+        # 将父类中的参数 model (mesa.Agent) 传入，让Agent知道自己所属的模型
         super().__init__(model)
 
         # 创建 Agent 的变量 wealth 并设置初始值
@@ -161,7 +161,7 @@ class MoneyModel(mesa.Model):
         self.agents.shuffle_do("say_hi")
 ```
 
-## 运行模型
+### 运行模型
 
 创建一个模型对象 (object) 并运行它的 step 方法。
 
@@ -221,7 +221,7 @@ starter_model = MoneyModel(10)
 starter_model.step()
 ```
 
-## Agents Exchange
+## Agents 交换财富
 
 ```{python}
 #| display-language: true
@@ -229,17 +229,18 @@ class MoneyAgent(mesa.Agent):
     """An agent with fixed initial wealth."""
 
     def __init__(self, model):
-        # Pass the parameters to the parent class.
         super().__init__(model)
-
-        # Create the agent's variable and set the initial values.
         self.wealth = 1
-
+        
+    # 定义 exchange 方法，让 Agent 交换财富
     def exchange(self):
-        # Verify agent has some wealth
-        if self.wealth > 0:
+        if self.wealth > 0: #有钱才能转账
+            #self.random, 是继承自 mesa.Agent 的随机数生成器
+            #.choice(...) 在列表中随机选择一个 Agent
+            #这里的self.model是在上一步—__init__中传入的模型对象
             other_agent = self.random.choice(self.model.agents)
-            if other_agent is not None:
+            
+            if other_agent is not None: #确保选到了一个 Agent
                 other_agent.wealth += 1
                 self.wealth -= 1
 
@@ -247,57 +248,56 @@ class MoneyAgent(mesa.Agent):
 class MoneyModel(mesa.Model):
     """A model with some number of agents."""
 
-    def __init__(self, n):
-        super().__init__()
+    def __init__(self, n, seed=None):
+        super().__init__(seed = seed)
         self.num_agents = n
 
-        # Create agents
         MoneyAgent.create_agents(model=self, n=n)
 
     def step(self):
         """Advance the model by one step."""
 
-        # This function psuedo-randomly reorders the list of agent objects and
-        # then iterates through calling the function passed in as the parameter
         self.agents.shuffle_do("exchange")
 ```
 
-### Run the Model
+### 运行模型
 
 ```{python}
 #| display-language: true
-model = MoneyModel(10)  # Tells the model to create 10 agents
-for _ in range(
-    30
-):  # Runs the model for 10 steps; an underscore is common convention for a variable that is not used
+model = MoneyModel(1000, 1234)  # 创建 1000 个 Agents
+
+#这个 for 循环中 _ 是一个占位符
+#表示我们不关心循环变量的值，也不关心现在运行了几次，只是想运行30次
+for _ in range(30): 
     model.step()
 ```
 
-### Visualize the Model
+### 可视化
 
 ```{python}
 #| display-language: true
+# 获取每个 Agent 的 wealth，放入一个列表
 agent_wealth = [a.wealth for a in model.agents]
-# Create a histogram with seaborn
+# 绘制直方图
 g = sns.histplot(agent_wealth, discrete=True)
 g.set(
     title="Wealth distribution", xlabel="Wealth", ylabel="number of agents"
-);  # The semicolon is just to avoid printing the object representation
+);
 plt.show()
 ```
 
-#### Or use reticulate to import data into R and use ggplot2 to visualize
+### 或者传入 R 中用 ggolot2 可视化
 
 ```{r}
 #| display-language: true
-library(reticulate)
 library(tidyverse)
 
+#所有的 python 对象都可以用 py$... 来访问
 agent_wealth_r <- tibble(wealth = py$agent_wealth)
 
 ggplot(agent_wealth_r, aes(x = wealth)) +
   geom_histogram(binwidth = 1, boundary = 0, closed = "left",
-                 color = "black", fill="darkgreen") +
+                 color = "black", fill="red") +
   labs(
     title = "Wealth distribution",
     x     = "Wealth",
