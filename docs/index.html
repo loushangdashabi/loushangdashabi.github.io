@@ -154,7 +154,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#导入依赖项" id="toc-导入依赖项" class="nav-link" data-scroll-target="#导入依赖项"><span class="header-section-number">3.1</span> 导入依赖项</a></li>
   <li><a href="#基础模型" id="toc-基础模型" class="nav-link" data-scroll-target="#基础模型"><span class="header-section-number">3.2</span> 基础模型</a></li>
   <li><a href="#空间概念" id="toc-空间概念" class="nav-link" data-scroll-target="#空间概念"><span class="header-section-number">3.3</span> 空间概念</a></li>
-  <li><a href="#代码实现" id="toc-代码实现" class="nav-link" data-scroll-target="#代码实现"><span class="header-section-number">3.4</span> 代码实现</a></li>
+  <li><a href="#代码实现" id="toc-代码实现" class="nav-link" data-scroll-target="#代码实现"><span class="header-section-number">3.4</span> 代码实现</a>
+  <ul>
+  <li><a href="#创建-cellagent" id="toc-创建-cellagent" class="nav-link" data-scroll-target="#创建-cellagent"><span class="header-section-number">3.4.1</span> 创建 CellAgent</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -319,16 +322,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 10.
-Hi, I am an agent, you can call me 4.
-Hi, I am an agent, you can call me 9.
-Hi, I am an agent, you can call me 5.
-Hi, I am an agent, you can call me 2.
-Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 3.
-Hi, I am an agent, you can call me 7.
+<pre><code>Hi, I am an agent, you can call me 8.
 Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 6.</code></pre>
+Hi, I am an agent, you can call me 10.
+Hi, I am an agent, you can call me 2.
+Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 6.
+Hi, I am an agent, you can call me 3.
+Hi, I am an agent, you can call me 9.
+Hi, I am an agent, you can call me 7.
+Hi, I am an agent, you can call me 5.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -383,16 +386,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.
-Hi, I am an agent 6,and I have 1 dollars.
-Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 4,and I have 1 dollars.
+<pre><code>Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 2,and I have 1 dollars.
 Hi, I am an agent 10,and I have 1 dollars.
 Hi, I am an agent 1,and I have 1 dollars.
-Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.</code></pre>
+Hi, I am an agent 4,and I have 1 dollars.
+Hi, I am an agent 5,and I have 1 dollars.
+Hi, I am an agent 8,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.
+Hi, I am an agent 9,and I have 1 dollars.
+Hi, I am an agent 3,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -539,11 +542,11 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 <pre><code># A tibble: 6 × 1
   wealth
    &lt;int&gt;
-1      1
-2      3
-3      0
+1      0
+2      1
+3      2
 4      0
-5      0
+5      2
 6      1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_wealth_r, <span class="fu">aes</span>(<span class="at">x =</span> wealth)) <span class="sc">+</span></span>
@@ -672,13 +675,67 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 </section>
 <section id="代码实现" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="代码实现"><span class="header-section-number">3.4</span> 代码实现</h2>
+<section id="创建-cellagent" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="创建-cellagent"><span class="header-section-number">3.4.1</span> 创建 CellAgent</h3>
 <p>为了使模型具有离散空间功能，我们将 <code>MoneyAgent</code> 实例化为 <code>CellAgent</code>。</p>
-<p><code>CellAgent</code> 是 <code>Agent</code> 的一个子类，专门用于在</p>
+<p><code>CellAgent</code> 是 <code>Agent</code> 的一个子类，专门用于在离散空间 <code>discrete space</code> 模块中交互和移动。</p>
 <div class="cell language-marker" data-display-language="true">
-
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#下面这行import相当于只从 mesa.discrete_space 中导入</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#CellAgent 和 OrthogonalMooreGrid 这两个类，如果此处导入</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#那么下面使用时不需要写明 mesa.discrete_space.CellAgent</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#而可以直接使用CellAgent，类似R中 dplyr::select 和 library(dplyr)</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#from mesa.discrete_space import CellAgent, OrthogonalMooreGrid</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#使用父类 CellAgent 来创建一个新的 Agent 类 MoneyAgent</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyAgent(mesa.discrete_space.CellAgent):</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""An agent with fixed initial wealth."""</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model, cell):</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(model)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.cell <span class="op">=</span> cell  <span class="co"># 将 Agent初始化在位置 (x,y)</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wealth <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Move Function</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> move(<span class="va">self</span>):</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.cell <span class="op">=</span> <span class="va">self</span>.cell.neighborhood.select_random_cell()</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> give_money(<span class="va">self</span>):</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>        cellmates <span class="op">=</span> [</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>            a <span class="cf">for</span> a <span class="kw">in</span> <span class="va">self</span>.cell.agents <span class="cf">if</span> a <span class="kw">is</span> <span class="kw">not</span> <span class="va">self</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>        ]  <span class="co"># Get all agents in cell</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.wealth <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> cellmates:</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>            other_agent <span class="op">=</span> <span class="va">self</span>.random.choice(cellmates)</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>            other_agent.wealth <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.wealth <span class="op">-=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell language-marker" data-display-language="true">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyModel(mesa.Model):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A model with some number of agents."""</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n, width, height, seed<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(seed<span class="op">=</span>seed)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_agents <span class="op">=</span> n</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Instantiate an instance of Moore neighborhood space</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.grid <span class="op">=</span> mesa.discrete_space.OrthogonalMooreGrid(</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>            (width, height), torus<span class="op">=</span><span class="va">True</span>, capacity<span class="op">=</span><span class="dv">10</span>, random<span class="op">=</span><span class="va">self</span>.random</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create agents</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        agents <span class="op">=</span> MoneyAgent.create_agents(</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>,</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.num_agents,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Randomly select agents cell</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.random.choices(<span class="va">self</span>.grid.all_cells.cells, k<span class="op">=</span><span class="va">self</span>.num_agents),</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>):</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.shuffle_do(<span class="st">"move"</span>)</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.do(<span class="st">"give_money"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 </section>
 </section>
 
