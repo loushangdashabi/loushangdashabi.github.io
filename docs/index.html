@@ -168,6 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   </ul></li>
   </ul></li>
+  <li><a href="#一些个人总结" id="toc-一些个人总结" class="nav-link" data-scroll-target="#一些个人总结"><span class="header-section-number">4</span> 一些个人总结</a></li>
   </ul>
 </nav>
 </nav>
@@ -331,16 +332,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 7.
+<pre><code>Hi, I am an agent, you can call me 7.
+Hi, I am an agent, you can call me 5.
+Hi, I am an agent, you can call me 6.
+Hi, I am an agent, you can call me 8.
+Hi, I am an agent, you can call me 4.
 Hi, I am an agent, you can call me 9.
 Hi, I am an agent, you can call me 3.
-Hi, I am an agent, you can call me 5.
-Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 4.
 Hi, I am an agent, you can call me 2.
-Hi, I am an agent, you can call me 10.</code></pre>
+Hi, I am an agent, you can call me 10.
+Hi, I am an agent, you can call me 1.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -395,16 +396,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.
-Hi, I am an agent 4,and I have 1 dollars.
-Hi, I am an agent 1,and I have 1 dollars.
+<pre><code>Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 2,and I have 1 dollars.
 Hi, I am an agent 8,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.
-Hi, I am an agent 6,and I have 1 dollars.
 Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 5,and I have 1 dollars.</code></pre>
+Hi, I am an agent 4,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.
+Hi, I am an agent 5,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 10,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -552,11 +553,11 @@ Hi, I am an agent 5,and I have 1 dollars.</code></pre>
   wealth
    &lt;int&gt;
 1      0
-2      0
+2      3
 3      0
 4      2
 5      0
-6      0</code></pre>
+6      1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_wealth_r, <span class="fu">aes</span>(<span class="at">x =</span> wealth)) <span class="sc">+</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">closed =</span> <span class="st">"left"</span>,</span>
@@ -836,11 +837,30 @@ Hi, I am an agent 5,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </div>
+</section>
+</section>
+</section>
+</section>
+<section id="一些个人总结" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 一些个人总结</h1>
+<p>在 <code>Mesa</code> 中，重要的类有两种：</p>
+<ul>
+<li><p><code>mesa.Agent</code>: 所有的 <code>Agent</code> 都应该继承这个类。</p>
+<ul>
+<li><p>在这个类中会对每个 <code>Agent</code> 进行初始化，分配一个唯一的 <code>unique_id</code>。</p></li>
+<li><p>初始化 (即定义 <code>__init__</code>) 时会传入模型对象 <code>model</code>，让 <code>Agent</code> 知道自己所属的模型。</p></li>
+<li><p>初始化时还会设置一些 <code>Agent</code> 的属性，如 <code>wealth</code>。</p></li>
+<li><p>在这个类中还需要定义 <code>Agent</code> 的行为方法，如 <code>say_hi</code>、<code>exchange</code> 等。</p></li>
+</ul></li>
+<li><p><code>mesa.Model</code>: 所有的模型都应该继承这个类。</p>
+<ul>
+<li><p>在这个类中会对模型进行初始化，创建模型的属性，如 <code>num_agents</code>、<code>grid</code> 等。</p></li>
+<li><p>初始化时会调用 <code>Agent</code> 的创建方法，<code>create_agents</code>，来创建模型中的 <code>Agent</code>，并初始化 <code>Agent</code> 的位置。</p></li>
+<li><p>在 <code>step</code> 方法中会调用所有 <code>Agent</code> 的行为方法。</p></li>
+</ul></li>
+</ul>
 
 
-</section>
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->

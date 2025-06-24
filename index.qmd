@@ -595,3 +595,25 @@ tidyheatmap(agent_counts, row, col, value, colors = viridis::viridis(100),
             angle_col = 0,
             main = "Number of agents on each cell of the grid")
 ```
+
+# 一些个人总结
+
+在 `Mesa` 中，重要的类有两种：
+
+-   `mesa.Agent`: 所有的 `Agent` 都应该继承这个类。
+
+    -   在这个类中会对每个 `Agent` 进行初始化，分配一个唯一的 `unique_id`。
+
+    -   初始化 (即定义 `__init__`) 时会传入模型对象 `model`，让 `Agent` 知道自己所属的模型。
+
+    -   初始化时还会设置一些 `Agent` 的属性，如 `wealth`。
+
+    -   在这个类中还需要定义 `Agent` 的行为方法，如 `say_hi`、`exchange` 等。
+
+-   `mesa.Model`: 所有的模型都应该继承这个类。
+
+    -   在这个类中会对模型进行初始化，创建模型的属性，如 `num_agents`、`grid` 等。
+
+    -   初始化时会调用 `Agent` 的创建方法，`create_agents`，来创建模型中的 `Agent`，并初始化 `Agent` 的位置。
+
+    -   在 `step` 方法中会调用所有 `Agent` 的行为方法。
