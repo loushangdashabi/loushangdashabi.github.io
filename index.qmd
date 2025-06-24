@@ -38,6 +38,8 @@ format:
 
 filters:
   - language-marker
+
+lightbox: auto
 ---
 
 # 准备步骤
@@ -429,7 +431,7 @@ print(f"You have {len(model.agents)} agents.")
 
 -   `Grid2DMovingAgent`: 具有特定网格移动能力的 `Agent`。
 
-![Discrete Space](/images/Discrete_Space.webp)
+![Discrete Space](/images/Discrete_Space.png)
 
 -   网格 (`Grid`): 规则多边形
 

@@ -79,6 +79,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-2c89100e688154a2180fd92179a1fa77.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark-8ec5966af8c3b28ba405f51a4523fbb6.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="site_libs/quarto-contrib/language-marker-0.0.1/language-marker.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -324,16 +327,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 3.
-Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 2.
-Hi, I am an agent, you can call me 7.
-Hi, I am an agent, you can call me 4.
-Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 10.
-Hi, I am an agent, you can call me 5.
+<pre><code>Hi, I am an agent, you can call me 7.
 Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 9.</code></pre>
+Hi, I am an agent, you can call me 8.
+Hi, I am an agent, you can call me 5.
+Hi, I am an agent, you can call me 9.
+Hi, I am an agent, you can call me 2.
+Hi, I am an agent, you can call me 1.
+Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 3.
+Hi, I am an agent, you can call me 10.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -388,16 +391,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 1,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.
+<pre><code>Hi, I am an agent 5,and I have 1 dollars.
+Hi, I am an agent 8,and I have 1 dollars.
 Hi, I am an agent 2,and I have 1 dollars.
 Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
 Hi, I am an agent 4,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.
 Hi, I am an agent 6,and I have 1 dollars.
-Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.</code></pre>
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 10,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -464,7 +467,7 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-12-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -499,7 +502,7 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-13-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -530,7 +533,7 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -547,7 +550,7 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 1      1
 2      2
 3      1
-4      1
+4      2
 5      2
 6      0</code></pre>
 </div>
@@ -562,7 +565,7 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-15-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -646,7 +649,7 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./images/Discrete_Space.webp" class="img-fluid figure-img"></p>
+<p><a href="./images/Discrete_Space.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Discrete Space"><img src="./images/Discrete_Space.png" class="img-fluid figure-img" alt="Discrete Space"></a></p>
 <figcaption>Discrete Space</figcaption>
 </figure>
 </div>
@@ -661,7 +664,7 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./images/images.png" class="img-fluid figure-img" width="500"></p>
+<p><a href="./images/images.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Network"><img src="./images/images.png" class="img-fluid figure-img" width="500" alt="Network"></a></p>
 <figcaption>Network</figcaption>
 </figure>
 </div>
@@ -670,7 +673,7 @@ Hi, I am an agent 7,and I have 1 dollars.</code></pre>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./images/1_aYqqekIblklLxV7yKnBKaQ.png" class="img-fluid figure-img" width="500"></p>
+<p><a href="./images/1_aYqqekIblklLxV7yKnBKaQ.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Voronoi"><img src="./images/1_aYqqekIblklLxV7yKnBKaQ.png" class="img-fluid figure-img" width="500" alt="Voronoi"></a></p>
 <figcaption>Voronoi</figcaption>
 </figure>
 </div>
@@ -1323,6 +1326,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
