@@ -563,7 +563,7 @@ plt.show()
 ```{r}
 #| display-language: true
 agent_counts = py$agent_counts %>% 
-  as_tibble() %>% 
+  as_tibble(.name_repair = "unique") %>% 
   rename_with(~ as.character(seq_along(.))) %>% 
   mutate(row = factor(1:n())) %>% 
   pivot_longer(-row, names_to="col", values_to="value") %>% 
