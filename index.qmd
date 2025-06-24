@@ -430,3 +430,19 @@ Mesa 提供两种空间类型：离散空间和连续空间。
 -   Grid2DMovingAgent: 具有特定网格移动能力的 Agent。
 
 ![Discrete Space](/images/Discrete_Space.webp)
+
+-   网格 (Grid): 规则多边形
+
+    -   摩尔邻域 (Moore Grid)：每个单元格的八个相邻单元格。
+
+    -   冯诺依曼邻域 (Von Neumann Grid)：每个单元格的四个相邻单元格。
+
+    -   六边形 (Hex Grid)：每个单元格的六个相邻单元格。
+
+-   网络 (Network): 每个格点是图中的一个节点，连接关系由边（edge）定义，适合社交网络、通信拓扑等场景。
+
+![Network](/images/images.png){width="500"}
+
+-   Voronoi: 不规则多边形划分空间：给定一组中心点，每块多边形就是一个 Cell，适用于地理空间等不规则网格情形。
+
+![Voronoi](/images/1_aYqqekIblklLxV7yKnBKaQ.png){width="500"}
