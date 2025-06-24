@@ -591,7 +591,7 @@ ggplot(agent_counts,aes(col, row, fill = value, label = value)) +
 library(tidyheatmaps)
 tidyheatmap(agent_counts, row, col, value, colors = viridis::viridis(100),
             display_numbers = T, number_format = "%.0f", number_color = "white",
-            fontsize_number = 10,legend = F,cellwidth = 20, cellheigh = 20,
+            fontsize_number = 10,legend = F,cellwidth = 30, cellheigh = 30,
             angle_col = 0,
             main = "Number of agents on each cell of the grid")
 ```
