@@ -20,8 +20,6 @@ format:
   html:
     theme:
       light: flatly
-      dark: darkly
-    respect-user-color-scheme: true
 
     toc: true
     toc-location: left
@@ -38,6 +36,7 @@ format:
 
 filters:
   - language-marker
+  - auto-dark
 ---
 
 # 准备步骤
