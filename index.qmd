@@ -1,5 +1,5 @@
 ---
-title: "在R中使用 Python 模块 Mesa 来创建 ABM 模型"
+title: "在 R 中使用 Python 模块 Mesa 来创建 ABM 模型"
 author:
   - "楼上"
   - "Mesa 开发团队 (提供demo)"
@@ -111,7 +111,7 @@ class MoneyAgent(mesa.Agent):
 class MoneyModel(mesa.Model):
     """A model with some number of agents."""
 
-    def __init__(self, n, seed=None): # n是创建的 Agent 数量，seed 是随机种子
+    def __init__(self, n, seed=None): # n 是创建的 Agent 数量，seed 是随机种子
         super().__init__(seed=seed)
         #在self (即当前模型) 中创建一个属性 num_agents，保存 Agent 的数量
         self.num_agents = n 
@@ -409,7 +409,7 @@ print(f"You have {len(model.agents)} agents.")
 
 -   连续空间：`Agent` 占据三维空间中的任何位置
 
-以下使用经典笛卡尔坐标系下的离散空间，具有两个模块：单元格 (`cell`) 和单元格 `Agent`。
+以下使用经典笛卡尔坐标系下的离散空间，具有两个模块：单元格 (`cell`) 和`单元格 Agent`。
 
 单元格类表示一个具备以下功能的位置：
 
@@ -421,7 +421,7 @@ print(f"You have {len(model.agents)} agents.")
 
 -   提供邻居 (`neighborhood`) 的信息
 
-单元格 `Agent` 类：能够理解如何在单元格中存在和移动的 `Agent`。
+`单元格 Agent` 类：能够理解如何在单元格中存在和移动的 `Agent`。
 
 -   `CellAgent`: 可以在单元格间移动的 `Agent`。
 
@@ -467,25 +467,32 @@ print(f"You have {len(model.agents)} agents.")
 class MoneyAgent(mesa.discrete_space.CellAgent):
     """An agent with fixed initial wealth."""
 
-    def __init__(self, model, cell):
+    def __init__(self, model, cell): 
         super().__init__(model)
-        self.cell = cell  # 将 Agent初始化在位置 (x,y)
+        self.cell = cell  # 将 Agent 初始化在 (x,y)，这个位置由参数 cell 决定
         self.wealth = 1
 
-    # Move Function
+    # 定义移动函数，控制 Agent 在单元格中移动
     def move(self):
+        # 选择一个随机的相邻单元格，默认半径为 1
         self.cell = self.cell.neighborhood.select_random_cell()
-
+    
+    #定义交换财富函数
     def give_money(self):
+        #选择同一个单元格内所有非本身的 Agent
         cellmates = [
             a for a in self.cell.agents if a is not self
-        ]  # Get all agents in cell
-
+        ] 
+        # 如果自己的财富 >0, 切存在同格内的其他 Agent
         if self.wealth > 0 and cellmates:
+            #在所有同格内的 Agent 中随机选择一个
             other_agent = self.random.choice(cellmates)
+            #将自己的财富 -1，选中的 Agent 的财富 +1
             other_agent.wealth += 1
             self.wealth -= 1
 ```
+
+### 创建模型类
 
 ```{python}
 #| display-language: true
@@ -495,20 +502,32 @@ class MoneyModel(mesa.Model):
     def __init__(self, n, width, height, seed=None):
         super().__init__(seed=seed)
         self.num_agents = n
-        # Instantiate an instance of Moore neighborhood space
+        # 创建一个摩尔邻域 (每个单元格有 4 个邻居) 网格
         self.grid = mesa.discrete_space.OrthogonalMooreGrid(
+            #长宽参数由外部传入，torus控制启用周期性边界
+            #即最右边和最左边相接，上下相接
+            #每个单元格最大可以容纳 10 个 Agent
             (width, height), torus=True, capacity=10, random=self.random
         )
 
-        # Create agents
+        #创建 Agent，这里和前面的模型不一样，新建的 Agent 被存入了列表 agents
+        #因为立刻要对 agents 进行操作，要将其保存
+        #如果直接调用 create_agents，模型中存在的是旧的+新建的 agents
+        #如下写，每次都会覆盖 agents
         agents = MoneyAgent.create_agents(
-            self,
-            self.num_agents,
-            # Randomly select agents cell
+            self, #model = self
+            self.num_agents, # n = self.num_agents
+            #给每个 Agent 分配一个随机的单元格
+            #从所有单元格中挑 k 次，k = Agent 的数量
             self.random.choices(self.grid.all_cells.cells, k=self.num_agents),
         )
-
+    
+    #定义 step，每步运行一次移动和一次给钱
     def step(self):
         self.agents.shuffle_do("move")
         self.agents.do("give_money")
 ```
+
+
+### 运行模型
+
