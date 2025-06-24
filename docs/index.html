@@ -318,16 +318,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 3.
-Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 6.
+<pre><code>Hi, I am an agent, you can call me 10.
 Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 10.
-Hi, I am an agent, you can call me 7.
-Hi, I am an agent, you can call me 9.
-Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 8.
 Hi, I am an agent, you can call me 2.
-Hi, I am an agent, you can call me 5.</code></pre>
+Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 9.
+Hi, I am an agent, you can call me 6.
+Hi, I am an agent, you can call me 7.
+Hi, I am an agent, you can call me 5.
+Hi, I am an agent, you can call me 3.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 seed 参数，则每次运行模型时 Agent 的顺序会保持一致。</p>
@@ -382,16 +382,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 1,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.
-Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
+<pre><code>Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 10,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.
 Hi, I am an agent 4,and I have 1 dollars.
 Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 6,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.</code></pre>
+Hi, I am an agent 2,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 8,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 5,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -538,12 +538,12 @@ Hi, I am an agent 10,and I have 1 dollars.</code></pre>
 <pre><code># A tibble: 6 × 1
   wealth
    &lt;int&gt;
-1      1
-2      1
+1      0
+2      5
 3      0
-4      2
-5      1
-6      0</code></pre>
+4      0
+5      2
+6      1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_wealth_r, <span class="fu">aes</span>(<span class="at">x =</span> wealth)) <span class="sc">+</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">closed =</span> <span class="st">"left"</span>,</span>
@@ -638,7 +638,7 @@ Hi, I am an agent 10,and I have 1 dollars.</code></pre>
 <li><p>FixedAgent: 永久固定在单元格上的静止 Agent。</p></li>
 <li><p>Grid2DMovingAgent: 具有特定网格移动能力的 Agent。</p></li>
 </ul>
-<p><img src="docs/Discrete_Space.webp" id="fig-elephant" class="img-fluid" width="375" alt="Discrete Space">。</p>
+<p><img src="./images/Discrete_Space.webp" class="img-fluid" alt="Discrete Space">。</p>
 
 
 </section>

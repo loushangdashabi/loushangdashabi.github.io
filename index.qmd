@@ -429,4 +429,4 @@ Mesa 提供两种空间类型：离散空间和连续空间。
 
 -   Grid2DMovingAgent: 具有特定网格移动能力的 Agent。
 
-![Discrete Space](docs/Discrete_Space.webp){#fig-elephant width="375"}。
+![Discrete Space](/images/Discrete_Space.webp)
