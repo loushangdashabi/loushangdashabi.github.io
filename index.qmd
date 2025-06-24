@@ -449,11 +449,66 @@ print(f"You have {len(model.agents)} agents.")
 
 ## 代码实现
 
+### 创建 CellAgent
+
 为了使模型具有离散空间功能，我们将 `MoneyAgent` 实例化为 `CellAgent`。
 
-`CellAgent` 是 `Agent` 的一个子类，专门用于在
+`CellAgent` 是 `Agent` 的一个子类，专门用于在离散空间 `discrete space` 模块中交互和移动。
 
 ```{python}
 #| display-language: true
+#下面这行import相当于只从 mesa.discrete_space 中导入
+#CellAgent 和 OrthogonalMooreGrid 这两个类，如果此处导入
+#那么下面使用时不需要写明 mesa.discrete_space.CellAgent
+#而可以直接使用CellAgent，类似R中 dplyr::select 和 library(dplyr)
+#from mesa.discrete_space import CellAgent, OrthogonalMooreGrid
 
+#使用父类 CellAgent 来创建一个新的 Agent 类 MoneyAgent
+class MoneyAgent(mesa.discrete_space.CellAgent):
+    """An agent with fixed initial wealth."""
+
+    def __init__(self, model, cell):
+        super().__init__(model)
+        self.cell = cell  # 将 Agent初始化在位置 (x,y)
+        self.wealth = 1
+
+    # Move Function
+    def move(self):
+        self.cell = self.cell.neighborhood.select_random_cell()
+
+    def give_money(self):
+        cellmates = [
+            a for a in self.cell.agents if a is not self
+        ]  # Get all agents in cell
+
+        if self.wealth > 0 and cellmates:
+            other_agent = self.random.choice(cellmates)
+            other_agent.wealth += 1
+            self.wealth -= 1
+```
+
+```{python}
+#| display-language: true
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n, width, height, seed=None):
+        super().__init__(seed=seed)
+        self.num_agents = n
+        # Instantiate an instance of Moore neighborhood space
+        self.grid = mesa.discrete_space.OrthogonalMooreGrid(
+            (width, height), torus=True, capacity=10, random=self.random
+        )
+
+        # Create agents
+        agents = MoneyAgent.create_agents(
+            self,
+            self.num_agents,
+            # Randomly select agents cell
+            self.random.choices(self.grid.all_cells.cells, k=self.num_agents),
+        )
+
+    def step(self):
+        self.agents.shuffle_do("move")
+        self.agents.do("give_money")
 ```
