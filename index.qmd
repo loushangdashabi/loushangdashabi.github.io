@@ -423,10 +423,10 @@ Mesa 提供两种空间类型：离散空间和连续空间。
 
 单元格 Agent 类：能够理解如何在单元格中存在和移动的 Agent。
 
-- CellAgent: 可以在单元格间移动的 Agent。
+-   CellAgent: 可以在单元格间移动的 Agent。
 
-- FixedAgent: 永久固定在单元格上的静止 Agent。
+-   FixedAgent: 永久固定在单元格上的静止 Agent。
 
-- Grid2DMovingAgent: 具有特定网格移动能力的 Agent。
+-   Grid2DMovingAgent: 具有特定网格移动能力的 Agent。
 
-
+![Discrete Space](docs/Discrete_Space.webp){#fig-elephant width="375"}。
