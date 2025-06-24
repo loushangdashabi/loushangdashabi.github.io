@@ -587,6 +587,7 @@ ggplot(agent_counts,aes(col, row, fill = value, label = value)) +
 或者调用一些更方便的包，如 `tidyheatmaps`。
 
 ```{r}
+#| display-language: true
 library(tidyheatmaps)
 tidyheatmap(agent_counts, row, col, value, colors = viridis::viridis(100),
             display_numbers = T, number_format = "%.0f", number_color = "white",
