@@ -530,6 +530,67 @@ class MoneyModel(mesa.Model):
         self.agents.do("give_money")
 ```
 
-
 ### 运行模型
 
+在一个 10x10 的网格上创建一个包含 100 个智能体的模型，并运行 20 步。
+
+```{python}
+#| display-language: true
+model = MoneyModel(100, 10, 10)
+for _ in range(20):
+    model.step()
+```
+
+### 可视化
+
+```{python}
+#| display-language: true
+agent_counts = np.zeros((model.grid.width, model.grid.height))
+
+for cell in model.grid.all_cells:
+    agent_counts[cell.coordinate] = len(cell.agents)
+
+g = sns.heatmap(agent_counts, cmap="viridis", annot=True, cbar=False, square=True)
+g.figure.set_size_inches(5, 5)
+g.set(title="Number of agents on each cell of the grid");
+plt.show()
+```
+
+#### 用 R 可视化
+
+使用 `ggplot2` 手动绘制。
+
+```{r}
+#| display-language: true
+agent_counts = py$agent_counts %>% 
+  as_tibble() %>% 
+  rename_with(~ as.character(seq_along(.))) %>% 
+  mutate(row = factor(1:n())) %>% 
+  pivot_longer(-row, names_to="col", values_to="value") %>% 
+  mutate(col = as.numeric(col) %>% factor)
+
+ggplot(agent_counts,aes(col, row, fill = value, label = value)) +
+  geom_tile() +
+  geom_text(color = "white") +
+  scale_fill_viridis_c(option = "viridis") + 
+  scale_y_discrete(limits = rev(levels(agent_counts$row))) +  
+  coord_fixed() + 
+  theme_minimal() +
+  ggtitle("Number of agents on each cell of the grid") +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = NULL, y = NULL)
+```
+
+或者调用一些更方便的包，如 `tidyheatmaps`。
+
+```{r}
+library(tidyheatmaps)
+tidyheatmap(agent_counts, row, col, value, colors = viridis::viridis(100),
+            display_numbers = T, number_format = "%.0f", number_color = "white",
+            fontsize_number = 10,legend = F,cellwidth = 20, cellheigh = 20,
+            angle_col = 0,
+            main = "Number of agents on each cell of the grid")
+```

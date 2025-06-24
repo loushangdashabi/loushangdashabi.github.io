@@ -8,7 +8,7 @@
 
 <meta name="author" content="楼上">
 <meta name="author" content="Mesa 开发团队 (提供demo)">
-<meta name="dcterms.date" content="2025-06-24">
+<meta name="dcterms.date" content="2025-06-25">
 <meta name="description" content="使用 R 调用 Mesa 库构建 ABM，模型 demo 完全来源于 Mesa 官方教程， 代码经过轻度改编，持续更新中。">
 
 <title>在 R 中使用 Python 模块 Mesa 来创建 ABM 模型</title>
@@ -162,6 +162,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#创建-cellagent" id="toc-创建-cellagent" class="nav-link" data-scroll-target="#创建-cellagent"><span class="header-section-number">3.4.1</span> 创建 CellAgent</a></li>
   <li><a href="#创建模型类-1" id="toc-创建模型类-1" class="nav-link" data-scroll-target="#创建模型类-1"><span class="header-section-number">3.4.2</span> 创建模型类</a></li>
   <li><a href="#运行模型-2" id="toc-运行模型-2" class="nav-link" data-scroll-target="#运行模型-2"><span class="header-section-number">3.4.3</span> 运行模型</a></li>
+  <li><a href="#可视化-1" id="toc-可视化-1" class="nav-link" data-scroll-target="#可视化-1"><span class="header-section-number">3.4.4</span> 可视化</a>
+  <ul class="collapse">
+  <li><a href="#用-r-可视化" id="toc-用-r-可视化" class="nav-link" data-scroll-target="#用-r-可视化"><span class="header-section-number">3.4.4.1</span> 用 R 可视化</a></li>
+  </ul></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -199,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 24, 2025</p>
+      <p class="date">June 25, 2025</p>
     </div>
   </div>
   
@@ -327,16 +331,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 7.
-Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 5.
-Hi, I am an agent, you can call me 9.
+<pre><code>Hi, I am an agent, you can call me 3.
 Hi, I am an agent, you can call me 2.
-Hi, I am an agent, you can call me 1.
+Hi, I am an agent, you can call me 7.
+Hi, I am an agent, you can call me 10.
+Hi, I am an agent, you can call me 5.
+Hi, I am an agent, you can call me 8.
+Hi, I am an agent, you can call me 9.
 Hi, I am an agent, you can call me 4.
-Hi, I am an agent, you can call me 3.
-Hi, I am an agent, you can call me 10.</code></pre>
+Hi, I am an agent, you can call me 1.
+Hi, I am an agent, you can call me 6.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -391,16 +395,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
-Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 4,and I have 1 dollars.
-Hi, I am an agent 6,and I have 1 dollars.
+<pre><code>Hi, I am an agent 4,and I have 1 dollars.
+Hi, I am an agent 5,and I have 1 dollars.
 Hi, I am an agent 7,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.
 Hi, I am an agent 10,and I have 1 dollars.
-Hi, I am an agent 1,and I have 1 dollars.</code></pre>
+Hi, I am an agent 8,and I have 1 dollars.
+Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 9,and I have 1 dollars.
+Hi, I am an agent 2,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -547,12 +551,12 @@ Hi, I am an agent 1,and I have 1 dollars.</code></pre>
 <pre><code># A tibble: 6 × 1
   wealth
    &lt;int&gt;
-1      1
-2      2
-3      1
+1      0
+2      3
+3      0
 4      2
-5      2
-6      0</code></pre>
+5      1
+6      2</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_wealth_r, <span class="fu">aes</span>(<span class="at">x =</span> wealth)) <span class="sc">+</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">closed =</span> <span class="st">"left"</span>,</span>
@@ -757,8 +761,88 @@ Hi, I am an agent 1,and I have 1 dollars.</code></pre>
 </section>
 <section id="运行模型-2" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="运行模型-2"><span class="header-section-number">3.4.3</span> 运行模型</h3>
+<p>在一个 10x10 的网格上创建一个包含 100 个智能体的模型，并运行 20 步。</p>
+<div class="cell language-marker" data-display-language="true">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> MoneyModel(<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="可视化-1" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="可视化-1"><span class="header-section-number">3.4.4</span> 可视化</h3>
+<div class="cell language-marker" data-display-language="true">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>agent_counts <span class="op">=</span> np.zeros((model.grid.width, model.grid.height))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cell <span class="kw">in</span> model.grid.all_cells:</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    agent_counts[cell.coordinate] <span class="op">=</span> <span class="bu">len</span>(cell.agents)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.heatmap(agent_counts, cmap<span class="op">=</span><span class="st">"viridis"</span>, annot<span class="op">=</span><span class="va">True</span>, cbar<span class="op">=</span><span class="va">False</span>, square<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>g.figure.set_size_inches(<span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>g.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Number of agents on each cell of the grid"</span>)<span class="op">;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-22-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="480"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="用-r-可视化" class="level4" data-number="3.4.4.1">
+<h4 data-number="3.4.4.1" class="anchored" data-anchor-id="用-r-可视化"><span class="header-section-number">3.4.4.1</span> 用 R 可视化</h4>
+<p>使用 <code>ggplot2</code> 手动绘制。</p>
+<div class="cell language-marker" data-display-language="true">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>agent_counts <span class="ot">=</span> py<span class="sc">$</span>agent_counts <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">as.character</span>(<span class="fu">seq_along</span>(.))) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">row =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>row, <span class="at">names_to=</span><span class="st">"col"</span>, <span class="at">values_to=</span><span class="st">"value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col =</span> <span class="fu">as.numeric</span>(col) <span class="sc">%&gt;%</span> factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(agent_counts,<span class="fu">aes</span>(col, row, <span class="at">fill =</span> value, <span class="at">label =</span> value)) <span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"viridis"</span>) <span class="sc">+</span> </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">limits =</span> <span class="fu">rev</span>(<span class="fu">levels</span>(agent_counts<span class="sc">$</span>row))) <span class="sc">+</span>  </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span> </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Number of agents on each cell of the grid"</span>) <span class="sc">+</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-23-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="index_files/figure-html/unnamed-chunk-23-3.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>或者调用一些更方便的包，如 <code>tidyheatmaps</code>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyheatmaps)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidyheatmap</span>(agent_counts, row, col, value, <span class="at">colors =</span> viridis<span class="sc">::</span><span class="fu">viridis</span>(<span class="dv">100</span>),</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">display_numbers =</span> T, <span class="at">number_format =</span> <span class="st">"%.0f"</span>, <span class="at">number_color =</span> <span class="st">"white"</span>,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontsize_number =</span> <span class="dv">10</span>,<span class="at">legend =</span> F,<span class="at">cellwidth =</span> <span class="dv">20</span>, <span class="at">cellheigh =</span> <span class="dv">20</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">angle_col =</span> <span class="dv">0</span>,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">"Number of agents on each cell of the grid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-24-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 </section>
 </section>
