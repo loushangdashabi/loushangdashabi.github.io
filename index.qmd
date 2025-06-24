@@ -75,7 +75,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 ```
 
-# 模型示例 1: Boltzmann 财富模型
+# 模型示例: Boltzmann 财富模型
 
 在这个模型中，每个 Agent 会初始化 1 个单位的货币，并在每个 step 中随机给另一个 Agent 1 个单位的货币。
 
@@ -264,7 +264,7 @@ class MoneyModel(mesa.Model):
 
 ```{python}
 #| display-language: true
-model = MoneyModel(1000, 1234)  # 创建 1000 个 Agents
+model = MoneyModel(10, 1234)  # 创建 10 个 Agents
 
 #这个 for 循环中 _ 是一个占位符
 #表示我们不关心循环变量的值，也不关心现在运行了几次，只是想运行30次
@@ -286,7 +286,7 @@ g.set(
 plt.show()
 ```
 
-### 传入 R 中用 ggplot2 可视化
+#### 传入 R 中用 ggplot2 可视化
 
 ```{r}
 #| display-language: true
@@ -304,3 +304,129 @@ ggplot(agent_wealth_r, aes(x = wealth)) +
     y     = "Number of agents"
   )+ theme_bw()
 ```
+
+### 创建多个模型对象
+
+为了更好地理解模型行为，可以创建多个模型对象，以观察整体分布。
+
+```{python}
+#| display-language: true
+#创建一个空列表来存储循环结果，与 R 中类似，可以使循环运行更快
+all_wealth = []
+#运行 100 次模型，每个模型有 10 个 Agent，并运行 30 次 step
+for _ in range(100):
+    model = MoneyModel(10)
+    for _ in range(30):
+        model.step()
+    #注意这里的缩进，说明下面这个循环是在for _ in range(100):循环中
+    #这样每次运行一个模型就会存储所有 Agent 的 wealth
+    for agent in model.agents:
+        #注意这里使用了就地扩展 (append), 即直接向 all_wealth 列表添加元素
+        #这是python的一个特性，直接在list后增加元素不是一个复杂的计算
+        all_wealth.append(agent.wealth)
+        
+g = sns.histplot(all_wealth, discrete=True)
+g.set(title="Wealth distribution", xlabel="Wealth", ylabel="number of agents");
+plt.show()
+```
+
+#### 在 R 中查看模型运行结果
+
+```{r}
+#| display-language: true
+all_wealth_r = tibble(wealth = py$all_wealth)
+head(all_wealth_r)
+
+ggplot(all_wealth_r, aes(x = wealth)) +
+  geom_histogram(binwidth = 1, boundary = 0, closed = "left",
+                 color = "black", fill="red") +
+  labs(
+    title = "Wealth distribution",
+    x     = "Wealth",
+    y     = "Number of agents"
+  )+ theme_bw()
+```
+
+# 添加空间
+
+## 导入依赖项
+
+```{python}
+#| display-language: true
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import mesa
+```
+
+## 基础模型
+
+以下模型即上述财富模型。
+
+```{python}
+#| display-language: true
+class MoneyAgent(mesa.Agent):
+    """An agent with fixed initial wealth."""
+
+    def __init__(self, model):
+        super().__init__(model)
+        self.wealth = 1
+
+    def exchange(self):
+        if self.wealth > 0:
+            other_agent = self.random.choice(self.model.agents)
+            if other_agent is not None:
+                other_agent.wealth += 1
+                self.wealth -= 1
+
+
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n):
+        super().__init__()
+        self.num_agents = n
+        MoneyAgent.create_agents(model=self, n=n)
+
+    def step(self):
+        """Advance the model by one step."""
+        self.agents.shuffle_do("exchange")
+```
+
+```{python}
+#| display-language: true
+model = MoneyModel(10)
+model.step()
+
+print(f"You have {len(model.agents)} agents.")
+```
+
+## 添加空间
+
+Mesa 提供两种空间类型：离散空间和连续空间。
+
+-   离散空间：Agent 占据单元格或节点
+
+-   连续空间：Agent 占据三维空间中的任何位置
+
+以下使用经典笛卡尔坐标系下的离散空间，具有两个模块：单元格 (cell) 和单元格Agent。
+
+单元格类表示一个具备以下功能的位置：
+
+-   具有属性 (如温度、资源等)
+
+-   追踪并限制其包含的 Agent
+
+-   与相邻单元格连接
+
+-   提供邻居 (neighborhood) 的信息
+
+单元格 Agent 类：能够理解如何在单元格中存在和移动的 Agent。
+
+- CellAgent: 可以在单元格间移动的 Agent。
+
+- FixedAgent: 永久固定在单元格上的静止 Agent。
+
+- Grid2DMovingAgent: 具有特定网格移动能力的 Agent。
+
+
