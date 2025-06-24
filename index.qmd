@@ -77,15 +77,15 @@ import matplotlib.pyplot as plt
 
 # 模型示例: Boltzmann 财富模型
 
-在这个模型中，每个 Agent 会初始化 1 个单位的货币，并在每个 step 中随机给另一个 Agent 1 个单位的货币。
+在这个模型中，每个 `Agent` 会初始化 1 个单位的货币，并在每个 `step` 中随机给另一个 Agent 1 个单位的货币。
 
 ## 创建 Agent 类
 
-Mesa 会自动为每个创建的 Agent 分配一个整数作为 unique_id。
+`Mesa` 会自动为每个创建的 `Agent` 分配一个整数作为 `unique_id`。
 
-下面这段代码创建了一个新类 (class) MoneyAgent，继承了 mesa.Agent 类的属性。
+下面这段代码创建了一个新类 (`class`) `MoneyAgent`，继承了 mesa.Agent 类的属性。
 
-mesa.Agent 是 Mesa 模块中定义的一个基类，所有的 Agent 都应该继承这个类。
+`mesa.Agent` 是 `Mesa` 模块中定义的一个基类，所有的 `Agent` 都应该继承这个类。
 
 ```{python}
 #| display-language: true
@@ -104,7 +104,7 @@ class MoneyAgent(mesa.Agent):
 
 ## 创建模型类
 
-创建一个模型类，继承自 mesa.Model，负责创建、保存和管理所有 Agent。
+创建一个模型类，继承自 `mesa.Model`，负责创建、保存和管理所有 `Agent`。
 
 ```{python}
 #| display-language: true
@@ -121,11 +121,11 @@ class MoneyModel(mesa.Model):
 
 ## 让 Agents "do"
 
-通过 do 让 ABM 运行起来，mesa 中的 do 可以按不同的顺序激活 Agent。
+通过 `do` 让 ABM 运行起来，`mesa` 中的 `do` 可以按不同的顺序激活 `Agent`。
 
-在每一个 step 中，(通常) 每一个 Agent 都会被激活并采取自己的行动，在内部发生变化和/或与彼此或者环境交互。
+在每一个 `step` 中，(通常) 每一个 `Agent` 都会被激活并采取自己的行动，在内部发生变化和/或与彼此或者环境交互。
 
-此处使用 agent.shuffle_do() 来实现随机重新排序激活顺序。
+此处使用 `agent.shuffle_do()` 来实现随机重新排序激活顺序。
 
 ```{python}
 #| display-language: true
@@ -163,7 +163,7 @@ class MoneyModel(mesa.Model):
 
 ### 运行模型
 
-创建一个模型对象 (object) 并运行它的 step 方法。
+创建一个模型对象 (`object`) 并运行它的 `step` 方法。
 
 ```{python}
 #| display-language: true
@@ -176,7 +176,7 @@ starter_model = MoneyModel(10)
 starter_model.step()
 ```
 
-如果在创建对象时传入了 seed 参数，则每次运行模型时 Agent 的顺序会保持一致。
+如果在创建对象时传入了 `seed` 参数，则每次运行模型时 `Agent` 的顺序会保持一致。
 
 ```{python}
 #| display-language: true
@@ -186,7 +186,7 @@ starter_model.step()
 
 ### 模型修改练习
 
-在原有模型的基础上，让 Agent 在激活时输出自己的 wealth。
+在原有模型的基础上，让 `Agent` 在激活时输出自己的 `wealth`。
 
 ```{python}
 #| display-language: true
@@ -401,48 +401,59 @@ model.step()
 print(f"You have {len(model.agents)} agents.")
 ```
 
-## 添加空间
+## 空间概念
 
-Mesa 提供两种空间类型：离散空间和连续空间。
+`Mesa` 提供两种空间类型：离散空间和连续空间。
 
--   离散空间：Agent 占据单元格或节点
+-   离散空间：`Agent` 占据单元格或节点
 
--   连续空间：Agent 占据三维空间中的任何位置
+-   连续空间：`Agent` 占据三维空间中的任何位置
 
-以下使用经典笛卡尔坐标系下的离散空间，具有两个模块：单元格 (cell) 和单元格Agent。
+以下使用经典笛卡尔坐标系下的离散空间，具有两个模块：单元格 (`cell`) 和单元格 `Agent`。
 
 单元格类表示一个具备以下功能的位置：
 
 -   具有属性 (如温度、资源等)
 
--   追踪并限制其包含的 Agent
+-   追踪并限制其包含的 `Agent`
 
 -   与相邻单元格连接
 
--   提供邻居 (neighborhood) 的信息
+-   提供邻居 (`neighborhood`) 的信息
 
-单元格 Agent 类：能够理解如何在单元格中存在和移动的 Agent。
+单元格 `Agent` 类：能够理解如何在单元格中存在和移动的 `Agent`。
 
--   CellAgent: 可以在单元格间移动的 Agent。
+-   `CellAgent`: 可以在单元格间移动的 `Agent`。
 
--   FixedAgent: 永久固定在单元格上的静止 Agent。
+-   `FixedAgent`: 永久固定在单元格上的静止 `Agent`。
 
--   Grid2DMovingAgent: 具有特定网格移动能力的 Agent。
+-   `Grid2DMovingAgent`: 具有特定网格移动能力的 `Agent`。
 
 ![Discrete Space](/images/Discrete_Space.webp)
 
--   网格 (Grid): 规则多边形
+-   网格 (`Grid`): 规则多边形
 
-    -   摩尔邻域 (Moore Grid)：每个单元格的八个相邻单元格。
+    -   摩尔邻域 (`Moore Grid`)：每个单元格的八个相邻单元格。
 
-    -   冯诺依曼邻域 (Von Neumann Grid)：每个单元格的四个相邻单元格。
+    -   冯诺依曼邻域 (`Von Neumann Grid`)：每个单元格的四个相邻单元格。
 
-    -   六边形 (Hex Grid)：每个单元格的六个相邻单元格。
+    -   六边形 (`Hex Grid`)：每个单元格的六个相邻单元格。
 
--   网络 (Network): 每个格点是图中的一个节点，连接关系由边（edge）定义，适合社交网络、通信拓扑等场景。
+-   网络 (`Network`): 每个格点是图中的一个节点，连接关系由边（`edge`）定义，适合社交网络、通信拓扑等场景。
 
 ![Network](/images/images.png){width="500"}
 
--   Voronoi: 不规则多边形划分空间：给定一组中心点，每块多边形就是一个 Cell，适用于地理空间等不规则网格情形。
+-   `Voronoi`: 不规则多边形划分空间：给定一组中心点，每块多边形就是一个 `Cell`，适用于地理空间等不规则网格情形。
 
 ![Voronoi](/images/1_aYqqekIblklLxV7yKnBKaQ.png){width="500"}
+
+## 代码实现
+
+为了使模型具有离散空间功能，我们将 `MoneyAgent` 实例化为 `CellAgent`。
+
+`CellAgent` 是 `Agent` 的一个子类，专门用于在
+
+```{python}
+#| display-language: true
+
+```
