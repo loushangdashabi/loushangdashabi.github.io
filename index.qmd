@@ -8,38 +8,6 @@ date: "`r format(Sys.time(), '%Y-%m-%d')`"
 description: >
   使用 R 调用 Mesa 库构建 ABM，模型 demo 完全来源于 Mesa 官方教程，
   代码经过轻度改编，持续更新中。
-
-project:
-  type: website
-  output-dir: docs
-
-website:
-  title: "在R中使用 Python 模块 Mesa 来创建 ABM 模型"
-
-format:
-  html:
-    theme:
-      light: flatly
-      dark: darkly
-    respect-user-color-scheme: true
-
-    toc: true
-    toc-location: left
-    toc-depth: 5
-    page-layout: full
-
-    fig-align: center
-    highlight-style: github
-    code-copy: true
-    number-sections: true
-
-    grid:
-      sidebar-width: 350px
-
-filters:
-  - language-marker
-
-lightbox: auto
 ---
 
 # 准备步骤
@@ -562,12 +530,13 @@ plt.show()
 
 ```{r}
 #| display-language: true
-agent_counts = py$agent_counts %>% 
-  as_tibble(.name_repair = "unique_quiet") %>% 
-  rename_with(~ as.character(seq_along(.))) %>% 
-  mutate(row = factor(1:n())) %>% 
-  pivot_longer(-row, names_to="col", values_to="value") %>% 
-  mutate(col = as.numeric(col) %>% factor)
+library(tidyverse)
+agent_counts = py$agent_counts |> 
+  as_tibble(.name_repair = "unique_quiet") |> 
+  rename_with(~ as.character(seq_along(.))) |> 
+  mutate(row = factor(1:n())) |> 
+  pivot_longer(-row, names_to="col", values_to="value") |> 
+  mutate(col = as.numeric(col) |> factor())
 
 ggplot(agent_counts,aes(col, row, fill = value, label = value)) +
   geom_tile() +
@@ -596,6 +565,16 @@ tidyheatmap(agent_counts, row, col, value, colors = viridis::viridis(100),
             main = "Number of agents on each cell of the grid")
 ```
 
+### 模型修改练习
+
+#### 改变网格尺寸
+
+```{python}
+#| display-language: true
+from mesa.discrete_space import CellAgent, OrthogonalMooreGrid
+```
+
+
 # 一些个人总结
 
 在 `Mesa` 中，重要的类有两种：
@@ -617,3 +596,4 @@ tidyheatmap(agent_counts, row, col, value, colors = viridis::viridis(100),
     -   初始化时会调用 `Agent` 的创建方法，`create_agents`，来创建模型中的 `Agent`，并初始化 `Agent` 的位置。
 
     -   在 `step` 方法中会调用所有 `Agent` 的行为方法。
+
