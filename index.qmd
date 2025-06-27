@@ -648,7 +648,7 @@ tidyheatmap(agent_counts_r, row, col, value, colors = viridis::viridis(100),
             main = "Number of agents on each cell of the grid")
 ```
 
-### 改为正交冯诺依曼
+#### 改为正交冯诺依曼
 
 将网格从摩尔邻域改为正交冯诺依曼邻域。
 ```{python}

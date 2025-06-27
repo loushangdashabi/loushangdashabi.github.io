@@ -171,8 +171,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#改变网格尺寸" id="toc-改变网格尺寸" class="nav-link" data-scroll-target="#改变网格尺寸"><span class="header-section-number">3.4.6.1</span> 改变网格尺寸</a></li>
   <li><a href="#改变单元格容量" id="toc-改变单元格容量" class="nav-link" data-scroll-target="#改变单元格容量"><span class="header-section-number">3.4.6.2</span> 改变单元格容量</a></li>
+  <li><a href="#改为正交冯诺依曼" id="toc-改为正交冯诺依曼" class="nav-link" data-scroll-target="#改为正交冯诺依曼"><span class="header-section-number">3.4.6.3</span> 改为正交冯诺依曼</a></li>
   </ul></li>
-  <li><a href="#改为正交冯诺依曼" id="toc-改为正交冯诺依曼" class="nav-link" data-scroll-target="#改为正交冯诺依曼"><span class="header-section-number">3.4.7</span> 改为正交冯诺依曼</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#一些个人总结" id="toc-一些个人总结" class="nav-link" data-scroll-target="#一些个人总结"><span class="header-section-number">4</span> 一些个人总结</a></li>
@@ -339,16 +339,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 5.
-Hi, I am an agent, you can call me 7.
-Hi, I am an agent, you can call me 3.
+<pre><code>Hi, I am an agent, you can call me 8.
 Hi, I am an agent, you can call me 10.
-Hi, I am an agent, you can call me 2.
-Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 9.
+Hi, I am an agent, you can call me 7.
 Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 4.</code></pre>
+Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 5.
+Hi, I am an agent, you can call me 3.
+Hi, I am an agent, you can call me 6.
+Hi, I am an agent, you can call me 9.
+Hi, I am an agent, you can call me 2.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -403,16 +403,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 6,and I have 1 dollars.
-Hi, I am an agent 1,and I have 1 dollars.
+<pre><code>Hi, I am an agent 10,and I have 1 dollars.
 Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
-Hi, I am an agent 4,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
 Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.</code></pre>
+Hi, I am an agent 8,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 4,and I have 1 dollars.
+Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.
+Hi, I am an agent 5,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -559,9 +559,9 @@ Hi, I am an agent 10,and I have 1 dollars.</code></pre>
 <pre><code># A tibble: 6 × 1
   wealth
    &lt;int&gt;
-1      3
-2      2
-3      0
+1      0
+2      1
+3      3
 4      0
 5      0
 6      0</code></pre>
@@ -940,9 +940,8 @@ Hi, I am an agent 10,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
-</section>
-<section id="改为正交冯诺依曼" class="level3" data-number="3.4.7">
-<h3 data-number="3.4.7" class="anchored" data-anchor-id="改为正交冯诺依曼"><span class="header-section-number">3.4.7</span> 改为正交冯诺依曼</h3>
+<section id="改为正交冯诺依曼" class="level4" data-number="3.4.6.3">
+<h4 data-number="3.4.6.3" class="anchored" data-anchor-id="改为正交冯诺依曼"><span class="header-section-number">3.4.6.3</span> 改为正交冯诺依曼</h4>
 <p>将网格从摩尔邻域改为正交冯诺依曼邻域。</p>
 <div class="cell language-marker" data-display-language="true">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyModel(mesa.Model):</span>
@@ -966,6 +965,7 @@ Hi, I am an agent 10,and I have 1 dollars.</code></pre>
 <span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.shuffle_do(<span class="st">"move"</span>)</span>
 <span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.do(<span class="st">"give_money"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </section>
 </section>
 </section>
