@@ -959,8 +959,8 @@ agent_wealth %>% filter(AgentID %in% c(3, 14, 25)) %>%
 agent_wealth %>% 
   group_by(Step) %>% 
   summarise(mean = mean(Wealth), 
-            lower = mean(Wealth) - sd(Wealth)/sqrt(n()), 
-            upper = mean(Wealth) + sd(Wealth)/sqrt(n())) %>% 
+            lower = mean(Wealth) - 1.96 * sd(Wealth)/sqrt(n()), 
+            upper = mean(Wealth) + 1.96 * sd(Wealth)/sqrt(n())) %>% 
   ggplot()+
   geom_line(aes(Step, mean),color = "steelblue")+
   geom_ribbon(aes(Step, ymin = lower, ymax = upper),

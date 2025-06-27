@@ -357,16 +357,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 5.
-Hi, I am an agent, you can call me 9.
-Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 2.
+<pre><code>Hi, I am an agent, you can call me 7.
 Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 9.
+Hi, I am an agent, you can call me 8.
+Hi, I am an agent, you can call me 5.
 Hi, I am an agent, you can call me 3.
+Hi, I am an agent, you can call me 2.
 Hi, I am an agent, you can call me 10.
 Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 7.
-Hi, I am an agent, you can call me 8.</code></pre>
+Hi, I am an agent, you can call me 6.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -421,16 +421,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 7,and I have 1 dollars.
-Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 4,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
-Hi, I am an agent 6,and I have 1 dollars.
-Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 1,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.
+<pre><code>Hi, I am an agent 9,and I have 1 dollars.
 Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.</code></pre>
+Hi, I am an agent 2,and I have 1 dollars.
+Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 10,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 8,and I have 1 dollars.
+Hi, I am an agent 4,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -1327,8 +1327,8 @@ Step AgentID
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>agent_wealth <span class="sc">%&gt;%</span> </span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Step) <span class="sc">%&gt;%</span> </span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Wealth), </span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">lower =</span> <span class="fu">mean</span>(Wealth) <span class="sc">-</span> <span class="fu">sd</span>(Wealth)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">n</span>()), </span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper =</span> <span class="fu">mean</span>(Wealth) <span class="sc">+</span> <span class="fu">sd</span>(Wealth)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">n</span>())) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">lower =</span> <span class="fu">mean</span>(Wealth) <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(Wealth)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">n</span>()), </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper =</span> <span class="fu">mean</span>(Wealth) <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(Wealth)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">n</span>())) <span class="sc">%&gt;%</span> </span>
 <span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
 <span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(Step, mean),<span class="at">color =</span> <span class="st">"steelblue"</span>)<span class="sc">+</span></span>
 <span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(Step, <span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper),</span>
