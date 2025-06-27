@@ -531,12 +531,17 @@ plt.show()
 ```{r}
 #| display-language: true
 library(tidyverse)
-agent_counts = py$agent_counts |> 
+
+py_grid_to_r = function(data){
+  data |> 
   as_tibble(.name_repair = "unique_quiet") |> 
   rename_with(~ as.character(seq_along(.))) |> 
   mutate(row = factor(1:n())) |> 
   pivot_longer(-row, names_to="col", values_to="value") |> 
   mutate(col = as.numeric(col) |> factor())
+}
+
+agent_counts = py_grid_to_r(py$agent_counts)
 
 ggplot(agent_counts,aes(col, row, fill = value, label = value)) +
   geom_tile() +
@@ -565,15 +570,111 @@ tidyheatmap(agent_counts, row, col, value, colors = viridis::viridis(100),
             main = "Number of agents on each cell of the grid")
 ```
 
+### 显示 Agent 的 wealth
+
+```{python}
+#| display-language: true
+agent_wealth = [a.wealth for a in model.agents]
+```
+
+```{r}
+#| display-language: true
+all_wealth_r = tibble(wealth = py$agent_wealth)
+
+ggplot(all_wealth_r, aes(x = wealth)) +
+  geom_histogram(binwidth = 1, boundary = 0, closed = "left",
+                 color = "black", fill="red") +
+  labs(
+    title = "Wealth distribution",
+    x     = "Wealth",
+    y     = "Number of agents"
+  )+ theme_bw()
+```
+
+
 ### 模型修改练习
 
 #### 改变网格尺寸
 
+将网格尺寸从 10x10 改为 20x20，并运行模型。
 ```{python}
 #| display-language: true
-from mesa.discrete_space import CellAgent, OrthogonalMooreGrid
+model = MoneyModel(100, 20, 20)
+for _ in range(20):
+    model.step()
+
+agent_counts = np.zeros((model.grid.width, model.grid.height))
+
+for cell in model.grid.all_cells:
+    agent_counts[cell.coordinate] = len(cell.agents)
 ```
 
+```{r}
+#| display-language: true
+agent_counts_r = py_grid_to_r(py$agent_counts)
+tidyheatmap(agent_counts_r, row, col, value, colors = viridis::viridis(100),
+            display_numbers = T, number_format = "%.0f", number_color = "white",
+            fontsize_number = 10,legend = F,cellwidth = 15, cellheigh = 15,
+            angle_col = 0,
+            main = "Number of agents on each cell of the grid")
+```
+
+#### 改变单元格容量
+
+将单元格容量从 10 改为 3，并运行模型。
+
+```{python}
+#| display-language: true
+model = MoneyModel(100, 10, 10)
+#访问 model 中的 grid 属性中的 capacity 属性，修改为 3
+model.grid.capacity = 3
+
+for _ in range(20):
+    model.step()
+
+agent_counts = np.zeros((model.grid.width, model.grid.height))
+
+for cell in model.grid.all_cells:
+    agent_counts[cell.coordinate] = len(cell.agents)
+```
+
+```{r}
+#| display-language: true
+agent_counts_r = py_grid_to_r(py$agent_counts)
+tidyheatmap(agent_counts_r, row, col, value, colors = viridis::viridis(100),
+            display_numbers = T, number_format = "%.0f", number_color = "white",
+            fontsize_number = 10,legend = F,cellwidth = 30, cellheigh = 30,
+            angle_col = 0,
+            main = "Number of agents on each cell of the grid")
+```
+
+### 改为正交冯诺依曼
+
+将网格从摩尔邻域改为正交冯诺依曼邻域。
+```{python}
+#| display-language: true
+
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n, width, height, seed=None):
+        super().__init__(seed=seed)
+        self.num_agents = n
+        # 创建一个正交冯诺依曼邻域网格
+        self.grid = mesa.discrete_space.OrthogonalVonNeumannGrid(
+            (width, height), torus=True, capacity=10, random=self.random
+        )
+
+        agents = MoneyAgent.create_agents(
+            self,
+            self.num_agents,
+            self.random.choices(self.grid.all_cells.cells, k=self.num_agents),
+        )
+
+    def step(self):
+        self.agents.shuffle_do("move")
+        self.agents.do("give_money")
+```
 
 # 一些个人总结
 
@@ -597,3 +698,4 @@ from mesa.discrete_space import CellAgent, OrthogonalMooreGrid
 
     -   在 `step` 方法中会调用所有 `Agent` 的行为方法。
 
+import mesa
