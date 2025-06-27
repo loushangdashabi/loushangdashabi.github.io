@@ -548,8 +548,8 @@ agent_counts <- map_dfr(
   ~{
     coord <- as.numeric(.x$coordinate)
     tibble(
-      col     = coord[1],
-      row     = coord[2],
+      col   = coord[1],
+      row   = coord[2],
       count = length(.x$agents)
     )
   }
@@ -603,8 +603,8 @@ agent_counts <- map_dfr(
   ~{
     coord <- as.numeric(.x$coordinate)
     tibble(
-      col     = coord[1],
-      row     = coord[2],
+      col   = coord[1],
+      row   = coord[2],
       count = length(.x$agents)
     )
   }
@@ -632,8 +632,8 @@ agent_counts <- map_dfr(
   ~{
     coord <- as.numeric(.x$coordinate)
     tibble(
-      col     = coord[1],
-      row     = coord[2],
+      col   = coord[1],
+      row   = coord[2],
       count = length(.x$agents)
     )
   }
@@ -673,13 +673,6 @@ class MoneyModel(mesa.Model):
     def step(self):
         self.agents.shuffle_do("move")
         self.agents.do("give_money")
-
-model = MoneyModel(100, 10, 10)
-
-for _ in range(20):
-    model.step()
-
-agent_wealth = [a.wealth for a in model.agents]
 ```
 
 ```{r}
@@ -787,12 +780,12 @@ class MoneyModel(mesa.Model):
     self.agents.shuffle_do("move")
     self.agents.do("give_money")
     
-model = MoneyModel(100, 10, 10)
+model = MoneyModel(100, 10, 10, 1234)
 for _ in range(100):
     model.step()
 ```
 
-## 获取 DataCollector 中的数据
+## 获取 model_level 数据
 
 ```{python}
 #| display-language: true
@@ -803,12 +796,15 @@ g.set(title="Gini Coefficient over Time", ylabel="Gini Coefficient");
 plt.show()
 ```
 
-### 在 R 中可视化
+### 在 R 中运行模型
 
 ```{r}
 #| display-language: true
+model = py$MoneyModel(100L, 10L, 10L, 1234L)
+walk(1:100L, ~model$step())
+
 # 可以直接这样调用 python 的 function
-gini_r = py$model$datacollector$get_model_vars_dataframe()  %>%  
+gini_r = model$datacollector$get_model_vars_dataframe()  %>%  
   rownames_to_column("step") %>% mutate(step = as.numeric(step))
 gini_r %>% 
   ggplot(aes(x = step, y = Gini)) +
@@ -819,4 +815,174 @@ gini_r %>%
     y     = "Gini Coefficient"
   ) + theme_bw()
 ```
+
+## 练习
+
+### 仅显示数据以查看格式
+
+```{r}
+#| display-language: true
+py$gini %>% 
+  rownames_to_column("step") %>% 
+  mutate(step = as.numeric(step)) %>% 
+  head(6)
+```
+
+### 增加 Agent 的数量和时间
+
+#### 增加数量
+
+```{r}
+#| display-language: true
+model = py$MoneyModel(400L, 20L, 20L, 1234L)
+walk(1:100L, ~model$step())
+
+gini_r = model$datacollector$get_model_vars_dataframe()  %>%  
+  rownames_to_column("step") %>% mutate(step = as.numeric(step))
+gini_r %>% 
+  ggplot(aes(x = step, y = Gini)) +
+  geom_line() +
+  labs(
+    title = "Gini Coefficient over Time",
+    x     = "Step",
+    y     = "Gini Coefficient"
+  ) + theme_bw()
+```
+
+
+#### 增加时间
+
+```{r}
+#| display-language: true
+model = py$MoneyModel(100L, 10L, 10L, 1234L)
+walk(1:1000L, ~model$step())
+
+gini_r = model$datacollector$get_model_vars_dataframe()  %>%  
+  rownames_to_column("step") %>% mutate(step = as.numeric(step))
+gini_r %>% 
+  ggplot(aes(x = step, y = Gini)) +
+  geom_line() +
+  labs(
+    title = "Gini Coefficient over Time",
+    x     = "Step",
+    y     = "Gini Coefficient"
+  ) + theme_bw()
+```
+
+## 获取 agent_level 数据
+
+绘制每个 Agent 在最后一步的财富分布。
+```{python}
+#| display-language: true
+agent_wealth = model.datacollector.get_agent_vars_dataframe()
+agent_wealth.head()
+
+last_step = agent_wealth.index.get_level_values("Step").max()  # Get the last step
+end_wealth = agent_wealth.xs(last_step, level="Step")[
+    "Wealth"
+]  # Get the welath of each agentat the last step
+# Create a histogram of wealth at the last step
+g = sns.histplot(end_wealth, discrete=True)
+g.set(
+    title="Distribution of wealth at the end of simulation",
+    xlabel="Wealth",
+    ylabel="number of agents",
+);
+plt.show()
+```
+
+```{r}
+#| display-language: true
+#这里有一点麻烦的是，numpy会建立一种多重索引的数据结构
+#转化为 R tibble 时会丢掉所有索引
+#但直接在 R 中 call 
+#py$model$datacollector$get_agent_vars_dataframe()$reset_index()
+#会出现问题，因此要不在上面的 python 环境中先转换索引
+#或者如下操作
+agent_wealth <- py_eval(
+  "model.datacollector.get_agent_vars_dataframe().reset_index()"
+)
+
+head(agent_wealth)
+
+last_step = agent_wealth$Step %>% max()
+end_wealth = agent_wealth %>% 
+  filter(Step == last_step) %>% 
+  select(Wealth)
+
+ggplot()+
+  geom_histogram(data = end_wealth, aes(Wealth), 
+               binwidth = 1, 
+               color = "black", fill="steelblue")+
+  ggtitle("Distribution of wealth at the end of simulation")+
+  xlab("Wealth")+
+  ylab("Number of agents")+
+  theme_bw()
+```
+
+
+绘制 Agent 8 的财富变化。
+
+```{python}
+#| display-language: true
+one_agent_wealth = agent_wealth.xs(8, level="AgentID")
+
+g = sns.lineplot(data=one_agent_wealth, x="Step", y="Wealth")
+g.set(title="Wealth of agent 8 over time");
+plt.show()
+```
+```{r}
+#| display-language: true
+agent_wealth %>% filter(AgentID == 8) %>% 
+  ggplot()+
+  geom_line(aes(Step, Wealth),color = "steelblue")+
+  ggtitle("Wealth of agent 8 over time")+
+  theme_bw()
+
+```
+
+绘制多个 Agent 的财富变化。
+
+```{r}
+#| display-language: true
+agent_wealth %>% filter(AgentID %in% c(3, 14, 25)) %>% 
+  ggplot()+
+  geom_line(aes(Step, Wealth,color = factor(AgentID)))+
+  ggtitle("Wealth of agent 3, 4 and 25 over time")+
+  theme_bw()
+```
+
+绘制所有 Agent 的财富的平均值和置信区间。
+
+```{r}
+#| display-language: true
+agent_wealth %>% 
+  group_by(Step) %>% 
+  summarise(mean = mean(Wealth), 
+            lower = mean(Wealth) - sd(Wealth)/sqrt(n()), 
+            upper = mean(Wealth) + sd(Wealth)/sqrt(n())) %>% 
+  ggplot()+
+  geom_line(aes(Step, mean),color = "steelblue")+
+  geom_ribbon(aes(Step, ymin = lower, ymax = upper),
+              fill = "steelblue", alpha = 0.2)+
+  ggtitle("Average wealth over time")+
+  theme_bw()
+
+ggplot(agent_wealth, aes(x = Step, y = Wealth, group = 1)) +
+  stat_summary(
+    geom      = "ribbon",
+    fun.data  = mean_cl_normal,
+    fun.args  = list(conf.int = 0.95),
+    fill      = "steelblue",
+    alpha     = 0.2
+  ) +
+  stat_summary(
+    geom = "line",
+    fun  = mean,
+    colour = "steelblue"
+  ) +
+  ggtitle("Average wealth over time") +
+  theme_bw()
+```
+
 
