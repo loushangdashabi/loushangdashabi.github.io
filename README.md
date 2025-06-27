@@ -1,4 +1,4 @@
-# 尝试在 R 中使用 Python 包 Mesa 构建 Agent-based model (ABM)
+# 在 R 中使用 Python 包 Mesa 构建 Agent-based model (ABM)
 
 这是一个我自己学习和尝试建立ABM的文档，其中的 Demo 来自 Mesa 官方教程 https://mesa.readthedocs.io/latest 。
 
