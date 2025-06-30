@@ -197,10 +197,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#选择" id="toc-选择" class="nav-link" data-scroll-target="#选择"><span class="header-section-number">6.1</span> 选择</a></li>
   <li><a href="#分组" id="toc-分组" class="nav-link" data-scroll-target="#分组"><span class="header-section-number">6.2</span> 分组</a></li>
   </ul></li>
-  <li><a href="#可视化-2" id="toc-可视化-2" class="nav-link" data-scroll-target="#可视化-2"><span class="header-section-number">7</span> 可视化</a>
+  <li><a href="#可视化-2" id="toc-可视化-2" class="nav-link" data-scroll-target="#可视化-2"><span class="header-section-number">7</span> 可视化</a></li>
+  <li><a href="#参数扫描" id="toc-参数扫描" class="nav-link" data-scroll-target="#参数扫描"><span class="header-section-number">8</span> 参数扫描</a>
   <ul>
-  <li><a href="#导入依赖" id="toc-导入依赖" class="nav-link" data-scroll-target="#导入依赖"><span class="header-section-number">7.1</span> 导入依赖</a></li>
-  <li><a href="#基础模型-1" id="toc-基础模型-1" class="nav-link" data-scroll-target="#基础模型-1"><span class="header-section-number">7.2</span> 基础模型</a></li>
+  <li><a href="#基础模型-1" id="toc-基础模型-1" class="nav-link" data-scroll-target="#基础模型-1"><span class="header-section-number">8.1</span> 基础模型</a></li>
+  <li><a href="#batch-运行" id="toc-batch-运行" class="nav-link" data-scroll-target="#batch-运行"><span class="header-section-number">8.2</span> Batch 运行</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -365,16 +366,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 10.
-Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 2.
-Hi, I am an agent, you can call me 9.
+<pre><code>Hi, I am an agent, you can call me 9.
+Hi, I am an agent, you can call me 5.
+Hi, I am an agent, you can call me 6.
 Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 4.
-Hi, I am an agent, you can call me 7.
+Hi, I am an agent, you can call me 8.
 Hi, I am an agent, you can call me 3.
-Hi, I am an agent, you can call me 5.</code></pre>
+Hi, I am an agent, you can call me 10.
+Hi, I am an agent, you can call me 2.
+Hi, I am an agent, you can call me 7.
+Hi, I am an agent, you can call me 4.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -429,16 +430,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 6,and I have 1 dollars.
-Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
-Hi, I am an agent 1,and I have 1 dollars.
-Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 3,and I have 1 dollars.
+<pre><code>Hi, I am an agent 8,and I have 1 dollars.
 Hi, I am an agent 10,and I have 1 dollars.
-Hi, I am an agent 4,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.</code></pre>
+Hi, I am an agent 9,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 5,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 6,and I have 1 dollars.
+Hi, I am an agent 2,and I have 1 dollars.
+Hi, I am an agent 3,and I have 1 dollars.
+Hi, I am an agent 4,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -1525,188 +1526,161 @@ Step AgentID
 </section>
 <section id="可视化-2" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> 可视化</h1>
-<section id="导入依赖" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="导入依赖"><span class="header-section-number">7.1</span> 导入依赖</h2>
+<p>略，不需要可交互可视化，也许可以用 <code>Shiny</code> 在 <code>R</code> 中实现，但我不会。</p>
+</section>
+<section id="参数扫描" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> 参数扫描</h1>
+<section id="基础模型-1" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="基础模型-1"><span class="header-section-number">8.1</span> 基础模型</h2>
 <div class="cell language-marker" data-display-language="true">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa.visualization <span class="im">import</span> SolaraViz, make_plot_component, make_space_component</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mesa.discrete_space <span class="im">import</span> CellAgent, OrthogonalMooreGrid</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_gini(model):</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    agent_wealths <span class="op">=</span> [agent.wealth <span class="cf">for</span> agent <span class="kw">in</span> model.agents]</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="bu">sorted</span>(agent_wealths)</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> model.num_agents</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> <span class="bu">sum</span>(xi <span class="op">*</span> (n <span class="op">-</span> i) <span class="cf">for</span> i, xi <span class="kw">in</span> <span class="bu">enumerate</span>(x)) <span class="op">/</span> (n <span class="op">*</span> <span class="bu">sum</span>(x))</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">/</span> n) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> B</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyAgent(CellAgent):</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""An agent with fixed initial wealth."""</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model, cell):</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(model)</span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.cell <span class="op">=</span> cell</span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wealth <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.steps_not_given <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> move(<span class="va">self</span>):</span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.cell <span class="op">=</span> <span class="va">self</span>.cell.neighborhood.select_random_cell()</span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> give_money(<span class="va">self</span>):</span>
+<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a>        cellmates <span class="op">=</span> [a <span class="cf">for</span> a <span class="kw">in</span> <span class="va">self</span>.cell.agents <span class="cf">if</span> a <span class="kw">is</span> <span class="kw">not</span> <span class="va">self</span>]</span>
+<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-25"><a href="#cb55-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(cellmates) <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> <span class="va">self</span>.wealth <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb55-26"><a href="#cb55-26" aria-hidden="true" tabindex="-1"></a>            other <span class="op">=</span> <span class="va">self</span>.random.choice(cellmates)</span>
+<span id="cb55-27"><a href="#cb55-27" aria-hidden="true" tabindex="-1"></a>            other.wealth <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb55-28"><a href="#cb55-28" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.wealth <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb55-29"><a href="#cb55-29" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 在这里增加了一个指示变量，如果一个 step 中没有给钱则+1</span></span>
+<span id="cb55-30"><a href="#cb55-30" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.steps_not_given <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb55-32"><a href="#cb55-32" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.steps_not_given <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb55-33"><a href="#cb55-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-34"><a href="#cb55-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-35"><a href="#cb55-35" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyModel(mesa.Model):</span>
+<span id="cb55-36"><a href="#cb55-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A model with some number of agents."""</span></span>
+<span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-38"><a href="#cb55-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n, width, height, seed<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb55-39"><a href="#cb55-39" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(seed<span class="op">=</span>seed)</span>
+<span id="cb55-40"><a href="#cb55-40" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_agents <span class="op">=</span> n</span>
+<span id="cb55-41"><a href="#cb55-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.grid <span class="op">=</span> OrthogonalMooreGrid(</span>
+<span id="cb55-42"><a href="#cb55-42" aria-hidden="true" tabindex="-1"></a>            (width, height), torus<span class="op">=</span><span class="va">True</span>, capacity<span class="op">=</span><span class="dv">10</span>, random<span class="op">=</span><span class="va">self</span>.random</span>
+<span id="cb55-43"><a href="#cb55-43" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb55-44"><a href="#cb55-44" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.datacollector <span class="op">=</span> mesa.DataCollector(</span>
+<span id="cb55-45"><a href="#cb55-45" aria-hidden="true" tabindex="-1"></a>            model_reporters<span class="op">=</span>{<span class="st">"Gini"</span>: compute_gini},</span>
+<span id="cb55-46"><a href="#cb55-46" aria-hidden="true" tabindex="-1"></a>            agent_reporters<span class="op">=</span>{<span class="st">"Wealth"</span>: <span class="st">"wealth"</span>, <span class="st">"Steps_not_given"</span>: <span class="st">"steps_not_given"</span>},</span>
+<span id="cb55-47"><a href="#cb55-47" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb55-48"><a href="#cb55-48" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.running <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb55-49"><a href="#cb55-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-50"><a href="#cb55-50" aria-hidden="true" tabindex="-1"></a>        agents <span class="op">=</span> MoneyAgent.create_agents(</span>
+<span id="cb55-51"><a href="#cb55-51" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>,</span>
+<span id="cb55-52"><a href="#cb55-52" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.num_agents,</span>
+<span id="cb55-53"><a href="#cb55-53" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.random.choices(<span class="va">self</span>.grid.all_cells.cells, k<span class="op">=</span><span class="va">self</span>.num_agents),</span>
+<span id="cb55-54"><a href="#cb55-54" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb55-55"><a href="#cb55-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-56"><a href="#cb55-56" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>):</span>
+<span id="cb55-57"><a href="#cb55-57" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.datacollector.collect(<span class="va">self</span>)</span>
+<span id="cb55-58"><a href="#cb55-58" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.shuffle_do(<span class="st">"move"</span>)</span>
+<span id="cb55-59"><a href="#cb55-59" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.do(<span class="st">"give_money"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="基础模型-1" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="基础模型-1"><span class="header-section-number">7.2</span> 基础模型</h2>
-<p>与上述模型相同。</p>
+<section id="batch-运行" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="batch-运行"><span class="header-section-number">8.2</span> Batch 运行</h2>
+<p><code>mesa.batch_run</code> 提供了一种批量运行模型的方式，可以在不同参数下运行模型，并收集结果。</p>
+<p>在这里使用了 <code>reticulate</code> 包的另一种用法，即 <code>import()</code> <code>Python</code> 模块后直接调用其中的函数。</p>
+<p>使用一个列表将需要的参数传递给模型，并指定迭代的次数 <code>iterations</code>。</p>
 <div class="cell language-marker" data-display-language="true">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_gini(model):</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    agent_wealths <span class="op">=</span> [agent.wealth <span class="cf">for</span> agent <span class="kw">in</span> model.agents]</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="bu">sorted</span>(agent_wealths)</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> model.num_agents</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> <span class="bu">sum</span>(xi <span class="op">*</span> (N <span class="op">-</span> i) <span class="cf">for</span> i, xi <span class="kw">in</span> <span class="bu">enumerate</span>(x)) <span class="op">/</span> (N <span class="op">*</span> <span class="bu">sum</span>(x))</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">/</span> N) <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> B</span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyAgent(CellAgent):</span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""An agent with fixed initial wealth."""</span></span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model, cell):</span>
-<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""initialize a MoneyAgent instance.</span></span>
-<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
-<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="co">            model: A model instance</span></span>
-<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(model)</span>
-<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.cell <span class="op">=</span> cell</span>
-<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wealth <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> move(<span class="va">self</span>):</span>
-<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Move the agent to a random neighboring cell."""</span></span>
-<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.cell <span class="op">=</span> <span class="va">self</span>.cell.neighborhood.select_random_cell()</span>
-<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-26"><a href="#cb56-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> give_money(<span class="va">self</span>):</span>
-<span id="cb56-27"><a href="#cb56-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Give 1 unit of wealth to a random agent in the same cell."""</span></span>
-<span id="cb56-28"><a href="#cb56-28" aria-hidden="true" tabindex="-1"></a>        cellmates <span class="op">=</span> [a <span class="cf">for</span> a <span class="kw">in</span> <span class="va">self</span>.cell.agents <span class="cf">if</span> a <span class="kw">is</span> <span class="kw">not</span> <span class="va">self</span>]</span>
-<span id="cb56-29"><a href="#cb56-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-30"><a href="#cb56-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> cellmates:  <span class="co"># Only give money if there are other agents present</span></span>
-<span id="cb56-31"><a href="#cb56-31" aria-hidden="true" tabindex="-1"></a>            other <span class="op">=</span> <span class="va">self</span>.random.choice(cellmates)</span>
-<span id="cb56-32"><a href="#cb56-32" aria-hidden="true" tabindex="-1"></a>            other.wealth <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb56-33"><a href="#cb56-33" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.wealth <span class="op">-=</span> <span class="dv">1</span></span>
-<span id="cb56-34"><a href="#cb56-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-35"><a href="#cb56-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>):</span>
-<span id="cb56-36"><a href="#cb56-36" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""do one step of the agent."""</span></span>
-<span id="cb56-37"><a href="#cb56-37" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.move()</span>
-<span id="cb56-38"><a href="#cb56-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.wealth <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb56-39"><a href="#cb56-39" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.give_money()</span>
-<span id="cb56-40"><a href="#cb56-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-41"><a href="#cb56-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-42"><a href="#cb56-42" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MoneyModel(mesa.Model):</span>
-<span id="cb56-43"><a href="#cb56-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A model with some number of agents."""</span></span>
-<span id="cb56-44"><a href="#cb56-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-45"><a href="#cb56-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n<span class="op">=</span><span class="dv">10</span>, width<span class="op">=</span><span class="dv">10</span>, height<span class="op">=</span><span class="dv">10</span>, seed<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb56-46"><a href="#cb56-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Initialize a MoneyModel instance.</span></span>
-<span id="cb56-47"><a href="#cb56-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-48"><a href="#cb56-48" aria-hidden="true" tabindex="-1"></a><span class="co">        Args:</span></span>
-<span id="cb56-49"><a href="#cb56-49" aria-hidden="true" tabindex="-1"></a><span class="co">            N: The number of agents.</span></span>
-<span id="cb56-50"><a href="#cb56-50" aria-hidden="true" tabindex="-1"></a><span class="co">            width: width of the grid.</span></span>
-<span id="cb56-51"><a href="#cb56-51" aria-hidden="true" tabindex="-1"></a><span class="co">            height: Height of the grid.</span></span>
-<span id="cb56-52"><a href="#cb56-52" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb56-53"><a href="#cb56-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(seed<span class="op">=</span>seed)</span>
-<span id="cb56-54"><a href="#cb56-54" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_agents <span class="op">=</span> n</span>
-<span id="cb56-55"><a href="#cb56-55" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.grid <span class="op">=</span> OrthogonalMooreGrid((width, height), random<span class="op">=</span><span class="va">self</span>.random)</span>
-<span id="cb56-56"><a href="#cb56-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-57"><a href="#cb56-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create agents</span></span>
-<span id="cb56-58"><a href="#cb56-58" aria-hidden="true" tabindex="-1"></a>        MoneyAgent.create_agents(</span>
-<span id="cb56-59"><a href="#cb56-59" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>,</span>
-<span id="cb56-60"><a href="#cb56-60" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.num_agents,</span>
-<span id="cb56-61"><a href="#cb56-61" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.random.choices(<span class="va">self</span>.grid.all_cells.cells, k<span class="op">=</span><span class="va">self</span>.num_agents),</span>
-<span id="cb56-62"><a href="#cb56-62" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb56-63"><a href="#cb56-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-64"><a href="#cb56-64" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.datacollector <span class="op">=</span> mesa.DataCollector(</span>
-<span id="cb56-65"><a href="#cb56-65" aria-hidden="true" tabindex="-1"></a>            model_reporters<span class="op">=</span>{<span class="st">"Gini"</span>: compute_gini}, agent_reporters<span class="op">=</span>{<span class="st">"Wealth"</span>: <span class="st">"wealth"</span>}</span>
-<span id="cb56-66"><a href="#cb56-66" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb56-67"><a href="#cb56-67" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.datacollector.collect(<span class="va">self</span>)</span>
-<span id="cb56-68"><a href="#cb56-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-69"><a href="#cb56-69" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> step(<span class="va">self</span>):</span>
-<span id="cb56-70"><a href="#cb56-70" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""do one step of the model"""</span></span>
-<span id="cb56-71"><a href="#cb56-71" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.agents.shuffle_do(<span class="st">"step"</span>)</span>
-<span id="cb56-72"><a href="#cb56-72" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.datacollector.collect(<span class="va">self</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>mesa <span class="ot">=</span> <span class="fu">import</span>(<span class="st">"mesa"</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">=</span> <span class="fu">import</span>(<span class="st">"pandas"</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>params <span class="ot">=</span> <span class="fu">list</span>(<span class="at">width =</span> <span class="dv">10</span>L, <span class="at">height =</span> <span class="dv">10</span>L, <span class="at">n =</span> <span class="fu">seq</span>(<span class="dv">5</span>L, <span class="dv">100</span>L, <span class="at">by =</span> <span class="dv">5</span>L))</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>results <span class="ot">=</span> mesa<span class="sc">$</span><span class="fu">batch_run</span>(</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    py<span class="sc">$</span>MoneyModel,</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">parameters =</span> params,</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">iterations =</span> <span class="dv">5</span>L,</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_steps =</span> <span class="dv">100</span>L,</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">number_processes =</span> <span class="dv">1</span>L,</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_collection_period =</span> <span class="dv">1</span>L,</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">display_progress =</span> <span class="cn">TRUE</span></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>results_df <span class="ot">=</span> pd<span class="sc">$</span><span class="fu">DataFrame</span>(results) <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 525,100 × 10
+   RunId iteration  Step width height     n  Gini AgentID Wealth Steps_not_given
+   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;           &lt;dbl&gt;
+ 1     0         0     0    10     10     5     0     NaN    NaN             NaN
+ 2     0         0     1    10     10     5     0       1      1               0
+ 3     0         0     1    10     10     5     0       2      1               0
+ 4     0         0     1    10     10     5     0       3      1               0
+ 5     0         0     1    10     10     5     0       4      1               0
+ 6     0         0     1    10     10     5     0       5      1               0
+ 7     0         0     2    10     10     5     0       1      1               1
+ 8     0         0     2    10     10     5     0       2      1               1
+ 9     0         0     2    10     10     5     0       3      1               1
+10     0         0     2    10     10     5     0       4      1               1
+# ℹ 525,090 more rows</code></pre>
 </div>
+</div>
+<p>可视化基尼系数分布。</p>
+<p>由于每个群体内的基尼系数相同，因此选择一个 <code>Agent</code> 即可。</p>
+<p>由于设置了 <code>iterations</code> 为 5，因此每个 <code>n</code> 的值会有 5 个结果。</p>
 <div class="cell language-marker" data-display-language="true">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Boltzmann 财富模型（Shiny＋reticulate）"</span>),</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"n_agents"</span>, <span class="st">"代理人数"</span>, </span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">min =</span> <span class="dv">10</span>, <span class="at">max =</span> <span class="dv">200</span>, <span class="at">value =</span> <span class="dv">50</span>, <span class="at">step =</span> <span class="dv">1</span>),</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"grid_w"</span>, <span class="st">"网格宽度"</span>, </span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">min =</span> <span class="dv">5</span>, <span class="at">max =</span> <span class="dv">50</span>, <span class="at">value =</span> <span class="dv">10</span>, <span class="at">step =</span> <span class="dv">1</span>),</span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"grid_h"</span>, <span class="st">"网格高度"</span>, </span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">min =</span> <span class="dv">5</span>, <span class="at">max =</span> <span class="dv">50</span>, <span class="at">value =</span> <span class="dv">10</span>, <span class="at">step =</span> <span class="dv">1</span>),</span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">actionButton</span>(<span class="st">"reset_btn"</span>, <span class="st">"🔄 Reset"</span>),</span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">actionButton</span>(<span class="st">"step_btn"</span>,  <span class="st">"▶️ Step"</span>)</span>
-<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"grid_plot"</span>, <span class="at">height =</span> <span class="st">"500px"</span>),</span>
-<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"gini_plot"</span>, <span class="at">height =</span> <span class="st">"250px"</span>)</span>
-<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a><span class="co"># —— 3. Server 逻辑 —— </span></span>
-<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 存模型实例和历史数据</span></span>
-<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>  model_r   <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="cn">NULL</span>)</span>
-<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>  step_count <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="dv">0</span>L)</span>
-<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>  gini_hist <span class="ot">&lt;-</span> <span class="fu">reactiveVal</span>(<span class="fu">tibble</span>(<span class="at">step =</span> <span class="dv">0</span>L, <span class="at">Gini =</span> <span class="fu">compute_gini</span>(<span class="fu">py_to_r</span>(</span>
-<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">source_python</span>(<span class="st">"money_model.py"</span>)  <span class="co"># 临时算一下初始 Gini</span></span>
-<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>wealth)))</span>
-<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># —— 重置模型 —— </span></span>
-<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>reset_btn, {</span>
-<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 新建 Python 模型实例</span></span>
-<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>    py_model <span class="ot">&lt;-</span> <span class="fu">MoneyModel</span>(</span>
-<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">n      =</span> <span class="fu">as.integer</span>(input<span class="sc">$</span>n_agents),</span>
-<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">width  =</span> <span class="fu">as.integer</span>(input<span class="sc">$</span>grid_w),</span>
-<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">height =</span> <span class="fu">as.integer</span>(input<span class="sc">$</span>grid_h),</span>
-<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed   =</span> <span class="dv">42</span>L</span>
-<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model_r</span>(py_model)</span>
-<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">step_count</span>(<span class="dv">0</span>L)</span>
-<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 初始化 Gini 历史</span></span>
-<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a>    pd0 <span class="ot">&lt;-</span> py_model<span class="sc">$</span>datacollector<span class="sc">$</span><span class="fu">get_model_vars_dataframe</span>()<span class="sc">$</span><span class="fu">reset_index</span>()</span>
-<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a>    df0 <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(pd0) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">step =</span> index)</span>
-<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gini_hist</span>(df0)</span>
-<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">ignoreNULL =</span> <span class="cn">FALSE</span>)  <span class="co"># 启动时也触发一次</span></span>
-<span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># —— 单步推进 —— </span></span>
-<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(input<span class="sc">$</span>step_btn, {</span>
-<span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">model_r</span>())</span>
-<span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 调用 Python 的 step()</span></span>
-<span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model_r</span>()<span class="sc">$</span><span class="fu">step</span>()</span>
-<span id="cb57-54"><a href="#cb57-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 更新计数</span></span>
-<span id="cb57-55"><a href="#cb57-55" aria-hidden="true" tabindex="-1"></a>    sc <span class="ot">&lt;-</span> <span class="fu">step_count</span>() <span class="sc">+</span> <span class="dv">1</span>L</span>
-<span id="cb57-56"><a href="#cb57-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">step_count</span>(sc)</span>
-<span id="cb57-57"><a href="#cb57-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 拉取最新 Gini 历史</span></span>
-<span id="cb57-58"><a href="#cb57-58" aria-hidden="true" tabindex="-1"></a>    pd_mod <span class="ot">&lt;-</span> <span class="fu">model_r</span>()<span class="sc">$</span>datacollector<span class="sc">$</span><span class="fu">get_model_vars_dataframe</span>()<span class="sc">$</span><span class="fu">reset_index</span>()</span>
-<span id="cb57-59"><a href="#cb57-59" aria-hidden="true" tabindex="-1"></a>    df_g <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(pd_mod) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">step =</span> index)</span>
-<span id="cb57-60"><a href="#cb57-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gini_hist</span>(df_g)</span>
-<span id="cb57-61"><a href="#cb57-61" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb57-62"><a href="#cb57-62" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb57-63"><a href="#cb57-63" aria-hidden="true" tabindex="-1"></a>  <span class="co"># —— 绘制网格图 —— </span></span>
-<span id="cb57-64"><a href="#cb57-64" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>grid_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb57-65"><a href="#cb57-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req</span>(<span class="fu">model_r</span>())</span>
-<span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 拉取所有 agent 的最新状态</span></span>
-<span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a>    pd_ag <span class="ot">&lt;-</span> <span class="fu">model_r</span>()<span class="sc">$</span>datacollector<span class="sc">$</span><span class="fu">get_agent_vars_dataframe</span>()<span class="sc">$</span><span class="fu">reset_index</span>()</span>
-<span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a>    df_ag <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(pd_ag) <span class="sc">%&gt;%</span></span>
-<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(<span class="at">step =</span> level_0, <span class="at">agent_id =</span> level_1, <span class="at">wealth =</span> wealth) <span class="sc">%&gt;%</span></span>
-<span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(step, agent_id), as.integer)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-71"><a href="#cb57-71" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(step <span class="sc">==</span> <span class="fu">step_count</span>())</span>
-<span id="cb57-72"><a href="#cb57-72" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df_ag, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> wealth, <span class="at">color =</span> wealth), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>)) <span class="sc">+</span></span>
-<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
-<span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a>      <span class="fu">coord_fixed</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Step"</span>, <span class="fu">step_count</span>()),</span>
-<span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb57-80"><a href="#cb57-80" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb57-81"><a href="#cb57-81" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a>  <span class="co"># —— 绘制 Gini 随步数变化 —— </span></span>
-<span id="cb57-85"><a href="#cb57-85" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>gini_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb57-86"><a href="#cb57-86" aria-hidden="true" tabindex="-1"></a>    df_g <span class="ot">&lt;-</span> <span class="fu">gini_hist</span>()</span>
-<span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df_g, <span class="fu">aes</span>(step, Gini)) <span class="sc">+</span></span>
-<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb57-90"><a href="#cb57-90" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gini 指数随步数变化"</span>,</span>
-<span id="cb57-91"><a href="#cb57-91" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Step"</span>, <span class="at">y =</span> <span class="st">"Gini"</span>) <span class="sc">+</span></span>
-<span id="cb57-92"><a href="#cb57-92" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
-<span id="cb57-93"><a href="#cb57-93" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb57-94"><a href="#cb57-94" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb57-95"><a href="#cb57-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-96"><a href="#cb57-96" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>results_df <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AgentID <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> Step <span class="sc">==</span> <span class="fu">max</span>(Step)) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> Gini)) <span class="sc">+</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Gini Coefficient vs. Number of Agents"</span>,</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Number of Agents"</span>,</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Gini Coefficient"</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><iframe data-deferred-src="app07ab8065195f58c922aa65aa0549dd69/?w=&amp;__subapp__=1" width="100%" height="400" class="shiny-frame shiny-frame-deferred"></iframe></p>
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-45-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="index_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>或者绘制误差条。</p>
+<div class="cell language-marker" data-display-language="true">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>results_df <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AgentID <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> Step <span class="sc">==</span> <span class="fu">max</span>(Step)) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> Gini)) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom      =</span> <span class="st">"errorbar"</span>,</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.data  =</span> mean_cl_normal,</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.args  =</span> <span class="fu">list</span>(<span class="at">conf.int =</span> <span class="fl">0.95</span>),</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color      =</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha     =</span> <span class="fl">0.8</span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun  =</span> mean,</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"steelblue"</span></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Gini Coefficient vs. Number of Agents"</span>,</span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Number of Agents"</span>,</span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Gini Coefficient"</span></span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-46-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="index_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 
