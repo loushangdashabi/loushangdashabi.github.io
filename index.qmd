@@ -1279,4 +1279,89 @@ results_df %>%
   )
 ```
 
+# 比较方案
 
+我们可以比较 25 个 `Agent` 和 400 个 `Agent` 的基尼系数的不同，为了更好地估计不确定性，将 `iterations` 设置为 25。
+
+此外，种子对 `ABM` 的运行非常重要，`ABM` 通常具有固有的随机性，种子在以下两个方面至关重要。
+
+- 可重复性(`Reproducibility`)：使用相同的种子可以确保每次运行模型时都能得到相同的结果。
+
+- 敏感性分析(`Sensitivity Analysis`)：确定模型结果对随机波动对稳健性。
+
+将种子视为一个附加参数并运行许多场景，使我们能够看到随机性对这个模型的影响。
+
+```{r}
+#| display-language: true
+params = list(seed = NULL, width = 10L, height = 10L, n = list(5L, 10L, 20L, 40L, 80L))
+results_5s = mesa$batch_run(
+    py$MoneyModel,
+    parameters = params,
+    iterations = 25L,
+    max_steps = 100L,
+    number_processes = 1L,
+    data_collection_period = 1L,
+    display_progress = TRUE
+)
+results_5s_df = pd$DataFrame(results_5s)
+```
+
+```{r}
+#| display-language: true
+results_5s_df_filtered = results_5s_df %>% 
+  filter(AgentID == 1)
+head(results_5s_df_filtered)
+
+results_5s_df%>% 
+  ggplot(aes(x = Step, y = Gini)) +
+  stat_summary(
+    aes(fill = factor(n)),
+    geom      = "ribbon",
+    fun.data  = mean_cl_normal,
+    fun.args  = list(conf.int = 0.95),
+    alpha     = 0.2
+  ) +
+  stat_summary(
+    aes(color= factor(n)),
+    geom = "line",
+    fun  = mean
+  ) +
+  labs(
+    title = "Gini coefficient for different population sizes\n(mean over 100 runs, with 95% confidence interval)",
+    y     = "Gini Coefficient"
+  ) + theme_bw()
+```
+
+
+可见，较小的群体，基尼系数增长较慢。
+
+下面将比较不同种群大小的没有交易的平均轮数。
+
+```{r}
+#| display-language: true
+results_5s_df %>% filter(Step != 0) %>% 
+  group_by(iteration, n, Step) %>% 
+  summarise(mean_wealth = mean(Wealth),
+            mean_steps_not_given = mean(Steps_not_given)) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = Step, y = mean_steps_not_given)) +
+  stat_summary(
+    aes(fill = factor (n)),
+    geom      = "ribbon",
+    fun.data  = mean_cl_normal,
+    fun.args  = list(conf.int = 0.95),
+    alpha     = 0.2
+  )+
+  stat_summary(
+    aes(color = factor(n)),
+    geom = "line",
+    fun  = mean
+  )+
+  theme_bw()+
+  labs(
+    title = "Average number of consecutive rounds without a transaction for different population sizes\n(mean with 95% confidence interval)",
+    y     = "Consecutive rounds without a transaction"
+  )
+```
+
+可见， 越小的群体，连续无交易的回合越多，因为 `Agent` 互动较少，财富不太会变化。

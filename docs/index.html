@@ -203,6 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#基础模型-1" id="toc-基础模型-1" class="nav-link" data-scroll-target="#基础模型-1"><span class="header-section-number">8.1</span> 基础模型</a></li>
   <li><a href="#batch-运行" id="toc-batch-运行" class="nav-link" data-scroll-target="#batch-运行"><span class="header-section-number">8.2</span> Batch 运行</a></li>
   </ul></li>
+  <li><a href="#比较方案" id="toc-比较方案" class="nav-link" data-scroll-target="#比较方案"><span class="header-section-number">9</span> 比较方案</a></li>
   </ul>
 </nav>
 </nav>
@@ -366,16 +367,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 9.
-Hi, I am an agent, you can call me 5.
-Hi, I am an agent, you can call me 6.
-Hi, I am an agent, you can call me 1.
-Hi, I am an agent, you can call me 8.
-Hi, I am an agent, you can call me 3.
-Hi, I am an agent, you can call me 10.
-Hi, I am an agent, you can call me 2.
+<pre><code>Hi, I am an agent, you can call me 1.
 Hi, I am an agent, you can call me 7.
-Hi, I am an agent, you can call me 4.</code></pre>
+Hi, I am an agent, you can call me 6.
+Hi, I am an agent, you can call me 3.
+Hi, I am an agent, you can call me 9.
+Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 2.
+Hi, I am an agent, you can call me 5.
+Hi, I am an agent, you can call me 10.
+Hi, I am an agent, you can call me 8.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -430,16 +431,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 8,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.
-Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.
-Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 1,and I have 1 dollars.
+<pre><code>Hi, I am an agent 4,and I have 1 dollars.
 Hi, I am an agent 6,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 10,and I have 1 dollars.
 Hi, I am an agent 2,and I have 1 dollars.
+Hi, I am an agent 8,and I have 1 dollars.
 Hi, I am an agent 3,and I have 1 dollars.
-Hi, I am an agent 4,and I have 1 dollars.</code></pre>
+Hi, I am an agent 5,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 9,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -1683,9 +1684,110 @@ Step AgentID
 </div>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="比较方案" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> 比较方案</h1>
+<p>我们可以比较 25 个 <code>Agent</code> 和 400 个 <code>Agent</code> 的基尼系数的不同，为了更好地估计不确定性，将 <code>iterations</code> 设置为 25。</p>
+<p>此外，种子对 <code>ABM</code> 的运行非常重要，<code>ABM</code> 通常具有固有的随机性，种子在以下两个方面至关重要。</p>
+<ul>
+<li><p>可重复性(<code>Reproducibility</code>)：使用相同的种子可以确保每次运行模型时都能得到相同的结果。</p></li>
+<li><p>敏感性分析(<code>Sensitivity Analysis</code>)：确定模型结果对随机波动对稳健性。</p></li>
+</ul>
+<p>将种子视为一个附加参数并运行许多场景，使我们能够看到随机性对这个模型的影响。</p>
+<div class="cell language-marker" data-display-language="true">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>params <span class="ot">=</span> <span class="fu">list</span>(<span class="at">seed =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="dv">10</span>L, <span class="at">height =</span> <span class="dv">10</span>L, <span class="at">n =</span> <span class="fu">list</span>(<span class="dv">5</span>L, <span class="dv">10</span>L, <span class="dv">20</span>L, <span class="dv">40</span>L, <span class="dv">80</span>L))</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>results_5s <span class="ot">=</span> mesa<span class="sc">$</span><span class="fu">batch_run</span>(</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    py<span class="sc">$</span>MoneyModel,</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">parameters =</span> params,</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">iterations =</span> <span class="dv">25</span>L,</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_steps =</span> <span class="dv">100</span>L,</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">number_processes =</span> <span class="dv">1</span>L,</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_collection_period =</span> <span class="dv">1</span>L,</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">display_progress =</span> <span class="cn">TRUE</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>results_5s_df <span class="ot">=</span> pd<span class="sc">$</span><span class="fu">DataFrame</span>(results_5s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell language-marker" data-display-language="true">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>results_5s_df_filtered <span class="ot">=</span> results_5s_df <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AgentID <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(results_5s_df_filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  RunId iteration Step seed width height n Gini AgentID Wealth Steps_not_given
+1     0         0    1 &lt;NA&gt;    10     10 5    0       1      1               0
+2     0         0    2 &lt;NA&gt;    10     10 5    0       1      1               0
+3     0         0    3 &lt;NA&gt;    10     10 5    0       1      1               1
+4     0         0    4 &lt;NA&gt;    10     10 5    0       1      1               2
+5     0         0    5 &lt;NA&gt;    10     10 5    0       1      1               3
+6     0         0    6 &lt;NA&gt;    10     10 5    0       1      1               4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>results_5s_df<span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Step, <span class="at">y =</span> Gini)) <span class="sc">+</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">factor</span>(n)),</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom      =</span> <span class="st">"ribbon"</span>,</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.data  =</span> mean_cl_normal,</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.args  =</span> <span class="fu">list</span>(<span class="at">conf.int =</span> <span class="fl">0.95</span>),</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha     =</span> <span class="fl">0.2</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">color=</span> <span class="fu">factor</span>(n)),</span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"line"</span>,</span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun  =</span> mean</span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb63-16"><a href="#cb63-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Gini coefficient for different population sizes</span><span class="sc">\n</span><span class="st">(mean over 100 runs, with 95% confidence interval)"</span>,</span>
+<span id="cb63-17"><a href="#cb63-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Gini Coefficient"</span></span>
+<span id="cb63-18"><a href="#cb63-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-48-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="index_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>可见，较小的群体，基尼系数增长较慢。</p>
+<p>下面将比较不同种群大小的没有交易的平均轮数。</p>
+<div class="cell language-marker" data-display-language="true">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>results_5s_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Step <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(iteration, n, Step) <span class="sc">%&gt;%</span> </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_wealth =</span> <span class="fu">mean</span>(Wealth),</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_steps_not_given =</span> <span class="fu">mean</span>(Steps_not_given)) <span class="sc">%&gt;%</span> </span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Step, <span class="at">y =</span> mean_steps_not_given)) <span class="sc">+</span></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">factor</span> (n)),</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom      =</span> <span class="st">"ribbon"</span>,</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.data  =</span> mean_cl_normal,</span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.args  =</span> <span class="fu">list</span>(<span class="at">conf.int =</span> <span class="fl">0.95</span>),</span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha     =</span> <span class="fl">0.2</span></span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span></span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(n)),</span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"line"</span>,</span>
+<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun  =</span> mean</span>
+<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span></span>
+<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average number of consecutive rounds without a transaction for different population sizes</span><span class="sc">\n</span><span class="st">(mean with 95% confidence interval)"</span>,</span>
+<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Consecutive rounds without a transaction"</span></span>
+<span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'iteration', 'n'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-49-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="index_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>可见， 越小的群体，连续无交易的回合越多，因为 <code>Agent</code> 互动较少，财富不太会变化。</p>
+
+
 </section>
 
 </main> <!-- /main -->
