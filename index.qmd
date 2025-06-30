@@ -62,8 +62,8 @@ import matplotlib.pyplot as plt
 class MoneyAgent(mesa.Agent):
     """An agent with fixed initial wealth."""
     
-    #初始化，每次使用 MoneyAgent 创建新对象时都会使用如下初始化
-    def __init__(self, model): #self代表当前对象，model 代表模型对象
+    # 初始化，每次使用 MoneyAgent 创建新对象时都会使用如下初始化
+    def __init__(self, model): # self代表当前对象，model 代表模型对象
       
         # 将父类中的参数 model (mesa.Agent) 传入，让Agent知道自己所属的模型
         super().__init__(model)
@@ -83,7 +83,7 @@ class MoneyModel(mesa.Model):
 
     def __init__(self, n, seed=None): # n 是创建的 Agent 数量，seed 是随机种子
         super().__init__(seed=seed)
-        #在self (即当前模型) 中创建一个属性 num_agents，保存 Agent 的数量
+        # 在self (即当前模型) 中创建一个属性 num_agents，保存 Agent 的数量
         self.num_agents = n 
         # 调用类方法 create_agents，创建 n 个 Agent
         MoneyAgent.create_agents(model=self, n=n)
@@ -105,7 +105,7 @@ class MoneyAgent(mesa.Agent):
     def __init__(self, model):
         super().__init__(model)
         self.wealth = 1
-        #以上代码同上
+        # 以上代码同上
         
         # 定义一个方法 say_hi，每个 step 中都会被调用
     def say_hi(self):
@@ -121,13 +121,13 @@ class MoneyModel(mesa.Model):
         self.num_agents = n
 
         MoneyAgent.create_agents(model=self, n=n)
-        #以上代码同上
+        # 以上代码同上
 
     # 定义模型的 step 方法
     def step(self):
         """Advance the model by one step."""
         
-        #随机重新排序 Agent 的激活顺序，并调用每个 Agent 的 say_hi 方法
+        # 随机重新排序 Agent 的激活顺序，并调用每个 Agent 的 say_hi 方法
         self.agents.shuffle_do("say_hi")
 ```
 
@@ -138,11 +138,11 @@ class MoneyModel(mesa.Model):
 ```{python}
 #| display-language: true
 
-#创建模型对象 starter_model，使用 MoneyModel 类
-#此处的 10 对应 MoneyModel 类的第二个参数 n，表示创建 10 个 Agent
+# 创建模型对象 starter_model，使用 MoneyModel 类
+# 此处的 10 对应 MoneyModel 类的第二个参数 n，表示创建 10 个 Agent
 starter_model = MoneyModel(10)
 
-#运行模型的 step 方法，激活所有 Agent
+# 运行模型的 step 方法，激活所有 Agent
 starter_model.step()
 ```
 
@@ -204,13 +204,13 @@ class MoneyAgent(mesa.Agent):
         
     # 定义 exchange 方法，让 Agent 交换财富
     def exchange(self):
-        if self.wealth > 0: #有钱才能转账
-            #self.random, 是继承自 mesa.Agent 的随机数生成器
-            #.choice(...) 在列表中随机选择一个 Agent
-            #这里的self.model是在上一步—__init__中传入的模型对象
+        if self.wealth > 0: # 有钱才能转账
+            # self.random, 是继承自 mesa.Agent 的随机数生成器
+            # .choice(...) 在列表中随机选择一个 Agent
+            # 这里的self.model是在上一步—__init__中传入的模型对象
             other_agent = self.random.choice(self.model.agents)
             
-            if other_agent is not None: #确保选到了一个 Agent
+            if other_agent is not None: # 确保选到了一个 Agent
                 other_agent.wealth += 1
                 self.wealth -= 1
 
@@ -236,8 +236,8 @@ class MoneyModel(mesa.Model):
 #| display-language: true
 model = MoneyModel(10, 1234)  # 创建 10 个 Agents
 
-#这个 for 循环中 _ 是一个占位符
-#表示我们不关心循环变量的值，也不关心现在运行了几次，只是想运行30次
+# 这个 for 循环中 _ 是一个占位符
+# 表示我们不关心循环变量的值，也不关心现在运行了几次，只是想运行30次
 for _ in range(30): 
     model.step()
 ```
@@ -282,18 +282,18 @@ ggplot(agent_wealth, aes(x = wealth)) +
 
 ```{python}
 #| display-language: true
-#创建一个空列表来存储循环结果，与 R 中类似，可以使循环运行更快
+# 创建一个空列表来存储循环结果，与 R 中类似，可以使循环运行更快
 all_wealth = []
-#运行 100 次模型，每个模型有 10 个 Agent，并运行 30 次 step
+# 运行 100 次模型，每个模型有 10 个 Agent，并运行 30 次 step
 for _ in range(100):
     model = MoneyModel(10)
     for _ in range(30):
         model.step()
-    #注意这里的缩进，说明下面这个循环是在for _ in range(100):循环中
-    #这样每次运行一个模型就会存储所有 Agent 的 wealth
+    # 注意这里的缩进，说明下面这个循环是在for _ in range(100):循环中
+    # 这样每次运行一个模型就会存储所有 Agent 的 wealth
     for agent in model.agents:
-        #注意这里使用了就地扩展 (append), 即直接向 all_wealth 列表添加元素
-        #这是python的一个特性，直接在list后增加元素不是一个复杂的计算
+        # 注意这里使用了就地扩展 (append), 即直接向 all_wealth 列表添加元素
+        # 这是python的一个特性，直接在list后增加元素不是一个复杂的计算
         all_wealth.append(agent.wealth)
         
 g = sns.histplot(all_wealth, discrete=True)
@@ -326,16 +326,6 @@ ggplot(all_wealth, aes(x = wealth)) +
 ```
 
 # 添加空间
-
-## 导入依赖项
-
-```{python}
-#| display-language: true
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import mesa
-```
 
 ## 基础模型
 
@@ -435,13 +425,13 @@ print(f"You have {len(model.agents)} agents.")
 
 ```{python}
 #| display-language: true
-#下面这行import相当于只从 mesa.discrete_space 中导入
-#CellAgent 和 OrthogonalMooreGrid 这两个类，如果此处导入
-#那么下面使用时不需要写明 mesa.discrete_space.CellAgent
-#而可以直接使用CellAgent，类似R中 dplyr::select 和 library(dplyr)
-#from mesa.discrete_space import CellAgent, OrthogonalMooreGrid
+# 下面这行import相当于只从 mesa.discrete_space 中导入
+# CellAgent 和 OrthogonalMooreGrid 这两个类，如果此处导入
+# 那么下面使用时不需要写明 mesa.discrete_space.CellAgent
+# 而可以直接使用CellAgent，类似R中 dplyr::select 和 library(dplyr)
+# from mesa.discrete_space import CellAgent, OrthogonalMooreGrid
 
-#使用父类 CellAgent 来创建一个新的 Agent 类 MoneyAgent
+# 使用父类 CellAgent 来创建一个新的 Agent 类 MoneyAgent
 class MoneyAgent(mesa.discrete_space.CellAgent):
     """An agent with fixed initial wealth."""
 
@@ -455,17 +445,17 @@ class MoneyAgent(mesa.discrete_space.CellAgent):
         # 选择一个随机的相邻单元格，默认半径为 1
         self.cell = self.cell.neighborhood.select_random_cell()
     
-    #定义交换财富函数
+    # 定义交换财富函数
     def give_money(self):
-        #选择同一个单元格内所有非本身的 Agent
+        # 选择同一个单元格内所有非本身的 Agent
         cellmates = [
             a for a in self.cell.agents if a is not self
         ] 
         # 如果自己的财富 >0, 切存在同格内的其他 Agent
         if self.wealth > 0 and cellmates:
-            #在所有同格内的 Agent 中随机选择一个
+            # 在所有同格内的 Agent 中随机选择一个
             other_agent = self.random.choice(cellmates)
-            #将自己的财富 -1，选中的 Agent 的财富 +1
+            # 将自己的财富 -1，选中的 Agent 的财富 +1
             other_agent.wealth += 1
             self.wealth -= 1
 ```
@@ -482,25 +472,25 @@ class MoneyModel(mesa.Model):
         self.num_agents = n
         # 创建一个摩尔邻域 (每个单元格有 4 个邻居) 网格
         self.grid = mesa.discrete_space.OrthogonalMooreGrid(
-            #长宽参数由外部传入，torus控制启用周期性边界
-            #即最右边和最左边相接，上下相接
-            #每个单元格最大可以容纳 10 个 Agent
+            # 长宽参数由外部传入，torus控制启用周期性边界
+            # 即最右边和最左边相接，上下相接
+            # 每个单元格最大可以容纳 10 个 Agent
             (width, height), torus=True, capacity=10, random=self.random
         )
 
-        #创建 Agent，这里和前面的模型不一样，新建的 Agent 被存入了列表 agents
-        #因为立刻要对 agents 进行操作，要将其保存
-        #如果直接调用 create_agents，模型中存在的是旧的+新建的 agents
-        #如下写，每次都会覆盖 agents
+        # 创建 Agent，这里和前面的模型不一样，新建的 Agent 被存入了列表 agents
+        # 因为立刻要对 agents 进行操作，要将其保存
+        # 如果直接调用 create_agents，模型中存在的是旧的+新建的 agents
+        # 如下写，每次都会覆盖 agents
         agents = MoneyAgent.create_agents(
-            self, #model = self
+            self, # model = self
             self.num_agents, # n = self.num_agents
-            #给每个 Agent 分配一个随机的单元格
-            #从所有单元格中挑 k 次，k = Agent 的数量
+            # 给每个 Agent 分配一个随机的单元格
+            # 从所有单元格中挑 k 次，k = Agent 的数量
             self.random.choices(self.grid.all_cells.cells, k=self.num_agents),
         )
     
-    #定义 step，每步运行一次移动和一次给钱
+    # 定义 step，每步运行一次移动和一次给钱
     def step(self):
         self.agents.shuffle_do("move")
         self.agents.do("give_money")
@@ -662,11 +652,9 @@ class MoneyModel(mesa.Model):
             (width, height), torus=True, capacity=10, random=self.random
         )
 
-        # Create agents
         agents = MoneyAgent.create_agents(
             self,
             self.num_agents,
-            # Randomly select agents cell
             self.random.choices(self.grid.all_cells.cells, k=self.num_agents),
         )
 
@@ -719,21 +707,11 @@ ggplot(agent_wealth, aes(x = wealth)) +
 
 # 数据收集
 
-## 导入依赖
-
-```{python}
-#| display-language: true
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import mesa
-from mesa.discrete_space import CellAgent, OrthogonalMooreGrid
-```
-
 ## 创建 model-level 数据收集
 
 ```{python}
 #| display-language: true
+from mesa.discrete_space import CellAgent, OrthogonalMooreGrid
 def compute_gini(model):
   agent_wealth = [agent.wealth for agent in model.agents]
   x = sorted(agent_wealth)
@@ -870,17 +848,17 @@ gini_r %>%
 
 ## 获取 agent_level 数据
 
-绘制每个 Agent 在最后一步的财富分布。
+绘制每个 `Agent` 在最后一步的财富分布。
 ```{python}
 #| display-language: true
 agent_wealth = model.datacollector.get_agent_vars_dataframe()
 agent_wealth.head()
 
-last_step = agent_wealth.index.get_level_values("Step").max()  # Get the last step
+last_step = agent_wealth.index.get_level_values("Step").max()
 end_wealth = agent_wealth.xs(last_step, level="Step")[
     "Wealth"
-]  # Get the welath of each agentat the last step
-# Create a histogram of wealth at the last step
+]
+
 g = sns.histplot(end_wealth, discrete=True)
 g.set(
     title="Distribution of wealth at the end of simulation",
@@ -892,12 +870,12 @@ plt.show()
 
 ```{r}
 #| display-language: true
-#这里有一点麻烦的是，numpy会建立一种多重索引的数据结构
-#转化为 R tibble 时会丢掉所有索引
-#但直接在 R 中 call 
-#py$model$datacollector$get_agent_vars_dataframe()$reset_index()
-#会出现问题，因此要不在上面的 python 环境中先转换索引
-#或者如下操作
+# 这里有一点麻烦的是，numpy会建立一种多重索引的数据结构
+# 转化为 R tibble 时会丢掉所有索引
+# 但直接在 R 中 call 
+# py$model$datacollector$get_agent_vars_dataframe()$reset_index()
+# 会出现问题，因此要不在上面的 python 环境中先转换索引
+# 或者如下操作
 agent_wealth <- py_eval(
   "model.datacollector.get_agent_vars_dataframe().reset_index()"
 )
@@ -920,16 +898,8 @@ ggplot()+
 ```
 
 
-绘制 Agent 8 的财富变化。
+绘制 `Agent` 8 的财富变化。
 
-```{python}
-#| display-language: true
-one_agent_wealth = agent_wealth.xs(8, level="AgentID")
-
-g = sns.lineplot(data=one_agent_wealth, x="Step", y="Wealth")
-g.set(title="Wealth of agent 8 over time");
-plt.show()
-```
 ```{r}
 #| display-language: true
 agent_wealth %>% filter(AgentID == 8) %>% 
@@ -940,7 +910,7 @@ agent_wealth %>% filter(AgentID == 8) %>%
 
 ```
 
-绘制多个 Agent 的财富变化。
+绘制多个 `Agent` 的财富变化。
 
 ```{r}
 #| display-language: true
@@ -951,7 +921,7 @@ agent_wealth %>% filter(AgentID %in% c(3, 14, 25)) %>%
   theme_bw()
 ```
 
-绘制所有 Agent 的财富的平均值和置信区间。
+绘制所有 `Agent` 的财富的平均值和置信区间。
 
 ```{r}
 #| display-language: true
@@ -985,3 +955,86 @@ ggplot(agent_wealth, aes(x = Step, y = Wealth, group = 1)) +
 ```
 
 
+# 通过 AgentSet 管理 Agents
+
+`Mesa` 使用基于集合的方法 `AgentSet` 来管理 `Agents`，但大多数情况下不会显式调用。
+
+以下展示两种 `Agent` 管理方法：
+
+- 选择(`Selecting`)：只让富裕的 `Agent` 给贫穷的 `Agent` 传递财富。
+
+- 分组(`GroupBy`)：根据财富将 `Agent` 分组。
+
+
+## 选择
+
+在这个模型变体中，将使用 `agents.select` 把  `Agent` 分为贫富两种。
+
+```{python}
+#| display-language: true
+def compute_gini(model):
+    agent_wealths = [agent.wealth for agent in model.agents]
+    x = sorted(agent_wealths)
+    n = model.num_agents
+    B = sum(xi * (n - i) for i, xi in enumerate(x)) / (n * sum(x))
+    return 1 + (1 / n) - 2 * B
+
+
+class MoneyAgent(mesa.Agent):
+    """An agent with fixed initial wealth."""
+
+    def __init__(self, model):
+        super().__init__(model)
+        self.wealth = 1
+    # 在这里定义了只给poor_agents 传递财富
+    def give_money(self, poor_agents):
+        if self.wealth > 0:
+            other_agent = self.random.choice(poor_agents)
+            other_agent.wealth += 1
+            self.wealth -= 1
+
+
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n):
+        super().__init__()
+        self.num_agents = n
+
+        MoneyAgent.create_agents(model=self, n=n)
+
+        self.datacollector = mesa.DataCollector(
+            model_reporters={"Gini": compute_gini}, 
+            agent_reporters={"Wealth": "wealth"}
+        )
+
+    def step(self):
+        self.datacollector.collect(self)
+        # 用 agent.select 获取贫富 Agent 的列表
+        # 这里的 lambda 等于 R 的匿名函数 ~
+        rich_agents = self.agents.select(lambda a: a.wealth >= 3)
+        poor_agents = self.agents.select(lambda a: a.wealth < 3)
+        # 当有富裕的 Agent 时，富裕的 Agent 给贫穷的 Agent 传递财富
+        if len(rich_agents) > 0:
+            rich_agents.shuffle_do("give_money", poor_agents)
+        else:
+            poor_agents.shuffle_do("give_money", poor_agents)
+```
+
+## 运行模型
+```{r}
+#| display-language: true
+model = py$MoneyModel(100L)
+walk(1:20L, ~model$step())
+
+agent_wealth = py_eval("model.datacollector.get_agent_vars_dataframe().reset_index()")
+
+agent_wealth  %>%
+  ggplot() +
+  geom_histogram(aes(Wealth), fill = "steelblue",binwidth = 1, color = "black") +
+  labs(
+    title = "Distribution of wealth for rich agents",
+    x     = "Wealth",
+    y     = "Number of agents"
+  ) + theme_bw()
+```
