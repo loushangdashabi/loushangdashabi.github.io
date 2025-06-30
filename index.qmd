@@ -1012,6 +1012,10 @@ class MoneyModel(mesa.Model):
         self.datacollector.collect(self)
         # 用 agent.select 获取贫富 Agent 的列表
         # 这里的 lambda 等于 R 的匿名函数 ~
+        # 在原本的教程中，这里写作model.agents.select
+        # 这在原生 python 环境中没有问题，因为在调用 model = MoneyModel(100) 时
+        # 会创建全局变量 model，但在 R 中运行模型时，无法找到
+        # 因此在这里改写成了更规范的 self.agents.select
         rich_agents = self.agents.select(lambda a: a.wealth >= 3)
         poor_agents = self.agents.select(lambda a: a.wealth < 3)
         # 当有富裕的 Agent 时，富裕的 Agent 给贫穷的 Agent 传递财富
@@ -1033,7 +1037,7 @@ agent_wealth  %>%
   ggplot() +
   geom_histogram(aes(Wealth), fill = "steelblue",binwidth = 1, color = "black") +
   labs(
-    title = "Distribution of wealth for rich agents",
+    title = "Wealth distribution",
     x     = "Wealth",
     y     = "Number of agents"
   ) + theme_bw()

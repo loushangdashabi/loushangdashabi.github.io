@@ -360,16 +360,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 运行模型的 step 方法，激活所有 Agent</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent, you can call me 3.
-Hi, I am an agent, you can call me 10.
-Hi, I am an agent, you can call me 9.
-Hi, I am an agent, you can call me 8.
+<pre><code>Hi, I am an agent, you can call me 2.
+Hi, I am an agent, you can call me 1.
 Hi, I am an agent, you can call me 4.
+Hi, I am an agent, you can call me 10.
+Hi, I am an agent, you can call me 8.
 Hi, I am an agent, you can call me 7.
-Hi, I am an agent, you can call me 2.
 Hi, I am an agent, you can call me 6.
 Hi, I am an agent, you can call me 5.
-Hi, I am an agent, you can call me 1.</code></pre>
+Hi, I am an agent, you can call me 3.
+Hi, I am an agent, you can call me 9.</code></pre>
 </div>
 </div>
 <p>如果在创建对象时传入了 <code>seed</code> 参数，则每次运行模型时 <code>Agent</code> 的顺序会保持一致。</p>
@@ -424,16 +424,16 @@ Hi, I am an agent, you can call me 8.</code></pre>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>starter_model <span class="op">=</span> MoneyModel(<span class="dv">10</span>)</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>starter_model.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Hi, I am an agent 1,and I have 1 dollars.
+<pre><code>Hi, I am an agent 8,and I have 1 dollars.
 Hi, I am an agent 4,and I have 1 dollars.
+Hi, I am an agent 7,and I have 1 dollars.
+Hi, I am an agent 1,and I have 1 dollars.
+Hi, I am an agent 2,and I have 1 dollars.
 Hi, I am an agent 6,and I have 1 dollars.
 Hi, I am an agent 5,and I have 1 dollars.
-Hi, I am an agent 10,and I have 1 dollars.
-Hi, I am an agent 8,and I have 1 dollars.
 Hi, I am an agent 3,and I have 1 dollars.
-Hi, I am an agent 9,and I have 1 dollars.
-Hi, I am an agent 2,and I have 1 dollars.
-Hi, I am an agent 7,and I have 1 dollars.</code></pre>
+Hi, I am an agent 10,and I have 1 dollars.
+Hi, I am an agent 9,and I have 1 dollars.</code></pre>
 </div>
 </div>
 </section>
@@ -1387,13 +1387,17 @@ Step AgentID
 <span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.datacollector.collect(<span class="va">self</span>)</span>
 <span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 用 agent.select 获取贫富 Agent 的列表</span></span>
 <span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 这里的 lambda 等于 R 的匿名函数 ~</span></span>
-<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a>        rich_agents <span class="op">=</span> <span class="va">self</span>.agents.select(<span class="kw">lambda</span> a: a.wealth <span class="op">&gt;=</span> <span class="dv">3</span>)</span>
-<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a>        poor_agents <span class="op">=</span> <span class="va">self</span>.agents.select(<span class="kw">lambda</span> a: a.wealth <span class="op">&lt;</span> <span class="dv">3</span>)</span>
-<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 当有富裕的 Agent 时，富裕的 Agent 给贫穷的 Agent 传递财富</span></span>
-<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(rich_agents) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a>            rich_agents.shuffle_do(<span class="st">"give_money"</span>, poor_agents)</span>
-<span id="cb51-46"><a href="#cb51-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb51-47"><a href="#cb51-47" aria-hidden="true" tabindex="-1"></a>            poor_agents.shuffle_do(<span class="st">"give_money"</span>, poor_agents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 在原本的教程中，这里写作model.agents.select</span></span>
+<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 这在原生 python 环境中没有问题，因为在调用 model = MoneyModel(100) 时</span></span>
+<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 会创建全局变量 model，但在 R 中运行模型时，无法找到</span></span>
+<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 因此在这里改写成了更规范的 self.agents.select</span></span>
+<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a>        rich_agents <span class="op">=</span> <span class="va">self</span>.agents.select(<span class="kw">lambda</span> a: a.wealth <span class="op">&gt;=</span> <span class="dv">3</span>)</span>
+<span id="cb51-46"><a href="#cb51-46" aria-hidden="true" tabindex="-1"></a>        poor_agents <span class="op">=</span> <span class="va">self</span>.agents.select(<span class="kw">lambda</span> a: a.wealth <span class="op">&lt;</span> <span class="dv">3</span>)</span>
+<span id="cb51-47"><a href="#cb51-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 当有富裕的 Agent 时，富裕的 Agent 给贫穷的 Agent 传递财富</span></span>
+<span id="cb51-48"><a href="#cb51-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(rich_agents) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb51-49"><a href="#cb51-49" aria-hidden="true" tabindex="-1"></a>            rich_agents.shuffle_do(<span class="st">"give_money"</span>, poor_agents)</span>
+<span id="cb51-50"><a href="#cb51-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb51-51"><a href="#cb51-51" aria-hidden="true" tabindex="-1"></a>            poor_agents.shuffle_do(<span class="st">"give_money"</span>, poor_agents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="运行模型-3" class="level2" data-number="6.2">
@@ -1408,7 +1412,7 @@ Step AgentID
 <span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(Wealth), <span class="at">fill =</span> <span class="st">"steelblue"</span>,<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
 <span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of wealth for rich agents"</span>,</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Wealth distribution"</span>,</span>
 <span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Wealth"</span>,</span>
 <span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Number of agents"</span></span>
 <span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
