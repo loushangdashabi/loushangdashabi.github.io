@@ -870,22 +870,24 @@ plt.show()
 
 ```{r}
 #| display-language: true
+model = py$MoneyModel(100L, 10L, 10L, 1234L)
+walk(1:100L, ~model$step())
+
 # 这里有一点麻烦的是，numpy会建立一种多重索引的数据结构
 # 转化为 R tibble 时会丢掉所有索引
 # 但直接在 R 中 call 
 # py$model$datacollector$get_agent_vars_dataframe()$reset_index()
-# 会出现问题，因此要不在上面的 python 环境中先转换索引
-# 或者如下操作
-agent_wealth <- py_eval(
-  "model.datacollector.get_agent_vars_dataframe().reset_index()"
+# 会出现问题，因此在 R 中进行了一次转换，!!!目前 reticulate 还没有提供更好的解决方法
+agent_wealth <- model$datacollector$get_agent_vars_dataframe() %>% 
+  bind_cols(
+  attributes(.)$pandas.index$to_frame() %>% py_to_r(),
+  .
 )
 
 head(agent_wealth)
 
-last_step = agent_wealth$Step %>% max()
 end_wealth = agent_wealth %>% 
-  filter(Step == last_step) %>% 
-  select(Wealth)
+  filter(Step == max(Step))
 
 ggplot()+
   geom_histogram(data = end_wealth, aes(Wealth), 
@@ -1025,13 +1027,16 @@ class MoneyModel(mesa.Model):
             poor_agents.shuffle_do("give_money", poor_agents)
 ```
 
-## 运行模型
 ```{r}
 #| display-language: true
 model = py$MoneyModel(100L)
 walk(1:20L, ~model$step())
 
-agent_wealth = py_eval("model.datacollector.get_agent_vars_dataframe().reset_index()")
+agent_wealth <- model$datacollector$get_agent_vars_dataframe() %>% 
+  bind_cols(
+  attributes(.)$pandas.index$to_frame() %>% py_to_r(),
+  .
+)
 
 agent_wealth  %>%
   ggplot() +
@@ -1042,3 +1047,93 @@ agent_wealth  %>%
     y     = "Number of agents"
   ) + theme_bw()
 ```
+
+## 分组
+
+通过一个 characteristics 将 `Agent` 分组, 例如提供 `Green`、`Blue` 和 `Mixed` 的种族属性，只在同种族内给钱。
+
+```{python}
+#| display-language: true
+def compute_gini(model):
+    agent_wealths = [agent.wealth for agent in model.agents]
+    x = sorted(agent_wealths)
+    n = model.num_agents
+    B = sum(xi * (n - i) for i, xi in enumerate(x)) / (n * sum(x))
+    return 1 + (1 / n) - 2 * B
+  
+class MoneyAgent(mesa.Agent):
+    """An agent with fixed initial wealth."""
+
+    def __init__(self, model, ethnicity):
+        super().__init__(model)
+        self.wealth = 1
+        # 定义 Agent 的种族
+        self.ethnicity = ethnicity
+
+    def give_money(self, similars):
+        if self.wealth > 0:
+            # 从同种族的 Agent 中随机选择一个
+            other_agent = self.random.choice(similars)
+            other_agent.wealth += 1
+            self.wealth -= 1
+
+
+class MoneyModel(mesa.Model):
+    """A model with some number of agents."""
+
+    def __init__(self, n):
+        super().__init__()
+        self.num_agents = n
+
+        # 创建一个种族列表
+        ethnicities = ["Green", "Blue", "Mixed"]
+
+        MoneyAgent.create_agents(
+            model=self,
+            n=self.num_agents,
+            # 从种族列表中随机选择种族
+            ethnicity=self.random.choices(ethnicities, k=self.num_agents),
+        )
+
+        self.datacollector = mesa.DataCollector(
+            model_reporters={"Gini": compute_gini},
+            agent_reporters={"Wealth": "wealth", "Ethnicity": "ethnicity"},
+        )
+
+    def step(self):
+        self.datacollector.collect(self)
+        # 创建一个字典，存储 Agent 的种族
+        grouped_agents = self.agents.groupby("ethnicity")
+        for ethnic, similars in grouped_agents:
+            if ethnic != "Mixed":
+                similars.shuffle_do("give_money", similars)
+            else:
+                similars.shuffle_do(
+                    "give_money", self.agents
+                )  # Mixed 可以给所有人钱
+```
+
+```{r}
+#| display-language: true
+model = py$MoneyModel(100L)
+walk(1:20L, ~model$step())
+
+agent_wealth <- model$datacollector$get_agent_vars_dataframe() %>% 
+  bind_cols(
+  attributes(.)$pandas.index$to_frame() %>% py_to_r(),
+  .
+)
+
+agent_wealth %>% 
+  ggplot()+
+  geom_histogram(aes(Wealth, fill = Ethnicity),binwidth = 1, color = "black")+
+  theme_bw()+
+  scale_fill_manual(values = c("Green" = "darkgreen", 
+                               "Blue" = "darkblue", 
+                               "Mixed" = "purple3")) +
+  labs(title = "Wealth distribution")
+```
+
+
+# 可视化
+
